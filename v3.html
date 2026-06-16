@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangkok Travel Suites Hotel — โรงแรมแบงค็อก ทราเวล สวีทส์</title>
+<meta name="description" content="โรงแรมแบงค็อก ทราเวล สวีทส์ ห้องพักสไตล์คอนเทมโพรารี พร้อมอบอุ่นด้วยการต้อนรับแบบไทย บนถนนงามวงศ์วาน">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Trirong:ital,wght@0,300;0,400;0,600;0,900;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --charcoal:#171412;
+  --charcoal-soft:#1f1b18;
+  --charcoal-mid:#252019;
+  --mint:#00FFB3;
+  --mint-dim:rgba(0,255,179,0.13);
+  --mint-glow:rgba(0,255,179,0.32);
+  --parchment:#E8DFC8;
+  --parchment-dim:rgba(232,223,200,0.07);
+  --text-muted:rgba(232,223,200,0.6);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'IBM Plex Sans Thai','Sukhumvit Set',sans-serif;
+  background:var(--charcoal);
+  color:var(--parchment);
+  line-height:1.8;
+  word-break:break-word;
+  overflow-wrap:break-word;
+  overflow-x:hidden;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--charcoal)}
+::-webkit-scrollbar-thumb{background:var(--mint);border-radius:2px}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:1.2rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,padding .3s,backdrop-filter .4s;
+}
+#nav.scrolled{
+  background:rgba(23,20,18,.93);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  padding:.7rem 1.5rem;
+  border-bottom:1px solid rgba(0,255,179,.1);
+}
+.nav-logo{
+  font-family:'Trirong',serif;font-weight:900;font-size:1rem;
+  color:var(--parchment);line-height:1.25;letter-spacing:.02em;
+}
+.nav-logo em{color:var(--mint);font-style:normal}
+.nav-links{display:none;list-style:none;gap:2rem;align-items:center}
+.nav-links a{
+  font-size:.82rem;font-weight:500;color:var(--text-muted);
+  padding:.5rem 0;transition:color .2s;
+}
+.nav-links a:hover{color:var(--mint)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.lang-sw{
+  display:flex;align-items:center;gap:4px;
+  font-size:.78rem;font-weight:600;color:var(--text-muted);
+  padding:.35rem .5rem;border-radius:6px;transition:color .2s;
+  cursor:pointer;
+}
+.lang-sw:hover{color:var(--mint)}
+.nav-book{
+  display:none;background:var(--mint);color:var(--charcoal);
+  font-weight:700;font-size:.78rem;padding:.55rem 1.2rem;
+  border-radius:50px;letter-spacing:.06em;text-transform:uppercase;
+  transition:transform .2s,box-shadow .2s;
+}
+.nav-book:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--mint-glow)}
+.hamburger{width:30px;height:24px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;padding:2px 0}
+.hamburger span{display:block;height:2px;background:var(--parchment);border-radius:2px;transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+/* Mobile drawer */
+.m-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:198;opacity:0;pointer-events:none;transition:opacity .3s}
+.m-overlay.open{opacity:1;pointer-events:all}
+.m-drawer{
+  position:fixed;top:0;right:-100%;width:min(300px,82vw);height:100vh;
+  background:var(--charcoal-soft);z-index:199;
+  padding:5.5rem 2rem 2rem;
+  display:flex;flex-direction:column;gap:.2rem;
+  transition:right .35s cubic-bezier(.4,0,.2,1);
+  border-left:1px solid rgba(0,255,179,.1);
+}
+.m-drawer.open{right:0}
+.m-drawer a{
+  display:block;font-size:1.05rem;padding:.9rem 0;
+  border-bottom:1px solid rgba(232,223,200,.07);
+  color:var(--text-muted);transition:color .2s,padding-left .2s;
+}
+.m-drawer a:hover{color:var(--mint);padding-left:.4rem}
+.m-drawer .m-book{
+  margin-top:1.5rem;background:var(--mint);color:var(--charcoal);
+  font-weight:700;text-align:center;padding:.85rem;border-radius:50px;
+  letter-spacing:.05em;text-transform:uppercase;font-size:.88rem;
+}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.hero-img{position:relative;width:100%;height:58vh;overflow:hidden;flex-shrink:0}
+.hero-img img{width:100%;height:100%;object-fit:cover;transform-origin:center;animation:hzoom 14s ease-in-out infinite alternate}
+@keyframes hzoom{from{transform:scale(1)}to{transform:scale(1.07)}}
+.hero-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(23,20,18,.5) 0%,rgba(0,255,179,.1) 55%,rgba(23,20,18,.7) 100%);
+}
+.hero-img::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,179,.018) 3px,rgba(0,255,179,.018) 4px);
+}
+.hero-panel{
+  background:var(--charcoal);padding:2.5rem 1.5rem 3.5rem;
+  display:flex;flex-direction:column;gap:1.5rem;position:relative;
+}
+.hero-panel::before{
+  content:'';position:absolute;top:-28px;left:0;right:0;height:30px;
+  background:var(--charcoal);clip-path:polygon(0 100%,100% 0,100% 100%);
+}
+.eyebrow{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.72rem;font-weight:700;color:var(--mint);
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.eyebrow .dot{width:6px;height:6px;background:var(--mint);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.65)}}
+.hero-h1{
+  font-family:'Trirong',serif;font-size:2.5rem;font-weight:900;
+  line-height:1.35;color:var(--parchment);
+}
+.hero-h1 em{color:var(--mint);font-style:italic}
+.hero-sub{font-size:.92rem;color:var(--text-muted);line-height:1.85;max-width:440px}
+.cta-row{display:flex;flex-direction:column;gap:.75rem}
+.btn-p{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+  background:var(--mint);color:var(--charcoal);font-weight:700;font-size:.88rem;
+  padding:.85rem 1.6rem;border-radius:50px;letter-spacing:.04em;text-transform:uppercase;
+  transition:transform .25s,box-shadow .25s;min-height:48px;border:none;cursor:pointer;
+}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--mint-glow)}
+.btn-g{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+  background:transparent;color:var(--parchment);font-weight:500;font-size:.88rem;
+  padding:.85rem 1.4rem;border-radius:50px;border:1px solid rgba(232,223,200,.22);
+  transition:border-color .25s,color .25s;min-height:48px;cursor:pointer;
+}
+.btn-g:hover{border-color:var(--mint);color:var(--mint)}
+.hero-stats{display:flex;gap:1.5rem;padding-top:1rem;border-top:1px solid rgba(232,223,200,.1)}
+.stat-n{font-family:'Trirong',serif;font-size:1.6rem;font-weight:900;color:var(--mint);line-height:1.1}
+.stat-l{font-size:.7rem;color:var(--text-muted);line-height:1.55;margin-top:.1rem}
+
+/* ── ROOMS ── */
+#rooms{padding:4.5rem 0 3rem;background:var(--charcoal);overflow:hidden}
+.sec-label{
+  display:flex;align-items:center;gap:.7rem;
+  padding:0 1.5rem;margin-bottom:1.75rem;
+}
+.sec-label::before{content:'';display:block;width:2rem;height:2px;background:var(--mint);flex-shrink:0}
+.sec-label span{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mint)}
+.sec-h{
+  font-family:'Trirong',serif;font-size:1.9rem;font-weight:900;
+  line-height:1.45;padding:0 1.5rem;margin-bottom:2.5rem;color:var(--parchment);
+}
+.rooms-scroll{
+  display:flex;gap:1rem;overflow-x:auto;padding:0 1.5rem 1.5rem;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.rooms-scroll::-webkit-scrollbar{display:none}
+.rcard{
+  flex:0 0 272px;scroll-snap-align:start;background:var(--charcoal-soft);
+  border-radius:20px;overflow:hidden;border:1px solid rgba(232,223,200,.07);
+  transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer;
+}
+.rcard:hover{transform:translateY(-6px);border-color:rgba(0,255,179,.22);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.rcard-img{position:relative;height:172px;overflow:hidden}
+.rcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.rcard:hover .rcard-img img{transform:scale(1.06)}
+.rcard-tag{
+  position:absolute;top:10px;right:10px;background:var(--mint);color:var(--charcoal);
+  font-size:.65rem;font-weight:700;padding:.28rem .65rem;border-radius:50px;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.rcard-body{padding:1.2rem 1.2rem 1.4rem}
+.rcard-name{font-family:'Trirong',serif;font-size:1.1rem;font-weight:700;color:var(--parchment);line-height:1.4;margin-bottom:.35rem}
+.rcard-desc{font-size:.78rem;color:var(--text-muted);line-height:1.75;margin-bottom:.9rem}
+.rcard-foot{display:flex;align-items:center;justify-content:space-between}
+.rcard-price{font-family:'Trirong',serif;font-size:1.02rem;font-weight:700;color:var(--mint)}
+.rcard-price small{font-family:'IBM Plex Sans Thai',sans-serif;font-size:.68rem;font-weight:400;color:var(--text-muted)}
+.rcard-sz{display:flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--text-muted)}
+
+/* ── ABOUT ── */
+#about{
+  padding:5rem 1.5rem;background:var(--parchment);color:var(--charcoal);
+  position:relative;overflow:hidden;
+}
+#about::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:56px;
+  background:var(--charcoal);clip-path:polygon(0 0,100% 0,100% 0,0 100%);
+}
+.about-inner{padding-top:1rem}
+.about-label{display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem}
+.about-label::before{content:'';display:block;width:2rem;height:2px;background:rgba(23,20,18,.3);flex-shrink:0}
+.about-label span{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(23,20,18,.45)}
+.about-h{font-family:'Trirong',serif;font-size:2.1rem;font-weight:900;line-height:1.4;color:var(--charcoal);margin-bottom:1.25rem}
+.about-h em{font-style:italic;color:#7a5a28}
+.about-body{font-size:.92rem;line-height:1.85;color:rgba(23,20,18,.7);margin-bottom:1.75rem}
+.about-img{border-radius:28px;overflow:hidden;height:260px;margin:0 -1.5rem}
+.about-img img{width:100%;height:100%;object-fit:cover}
+.about-quote{
+  margin-top:2rem;padding:1.35rem 1.25rem;
+  background:rgba(23,20,18,.06);border-left:3px solid rgba(23,20,18,.35);
+  border-radius:0 14px 14px 0;
+}
+.about-quote p{font-family:'Trirong',serif;font-size:1.05rem;font-style:italic;line-height:1.65;color:var(--charcoal)}
+.about-quote cite{display:block;margin-top:.6rem;font-size:.72rem;font-style:normal;font-weight:600;color:rgba(23,20,18,.45);letter-spacing:.08em;text-transform:uppercase}
+
+/* ── AMENITIES ── */
+#amenities{padding:5rem 1.5rem;background:var(--charcoal-soft)}
+.am-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-top:2.25rem}
+.am-item{
+  background:var(--parchment-dim);border:1px solid rgba(232,223,200,.08);
+  border-radius:16px;padding:1.1rem .95rem;
+  display:flex;flex-direction:column;gap:.65rem;
+  transition:background .25s,border-color .25s,transform .25s;
+}
+.am-item:hover{background:var(--mint-dim);border-color:rgba(0,255,179,.18);transform:translateY(-3px)}
+.am-icon{
+  width:34px;height:34px;background:rgba(0,255,179,.1);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--mint);
+}
+.am-name{font-size:.8rem;font-weight:600;color:var(--parchment);line-height:1.5}
+.am-feat{
+  grid-column:1/-1;flex-direction:row;align-items:center;
+  background:linear-gradient(135deg,rgba(0,255,179,.08),rgba(232,223,200,.04));
+  border-color:rgba(0,255,179,.16);padding:1.35rem 1.2rem;gap:.95rem;
+}
+.am-feat .am-icon{width:44px;height:44px;flex-shrink:0;background:rgba(0,255,179,.15)}
+.am-feat-txt{display:flex;flex-direction:column;gap:.2rem}
+.am-feat-name{font-size:.9rem;font-weight:600;color:var(--parchment);line-height:1.5}
+.am-feat-desc{font-size:.76rem;color:var(--text-muted);line-height:1.65}
+
+/* ── GALLERY ── */
+#gallery{padding:5rem 0;background:var(--charcoal-mid);overflow:hidden}
+.gal-head{padding:0 1.5rem;margin-bottom:2.25rem}
+.gal-strip{
+  display:flex;gap:.85rem;padding:0 1.5rem;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.gal-strip::-webkit-scrollbar{display:none}
+.gal-item{flex:0 0 200px;height:280px;border-radius:18px;overflow:hidden;position:relative;flex-shrink:0}
+.gal-item:nth-child(even){margin-top:1.75rem}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gal-item:hover img{transform:scale(1.08)}
+.gal-cap{
+  position:absolute;bottom:0;left:0;right:0;padding:.85rem;
+  background:linear-gradient(to top,rgba(23,20,18,.8),transparent);
+  font-size:.72rem;color:rgba(232,223,200,.7);line-height:1.4;
+}
+
+/* ── LOCATION ── */
+#location{padding:5rem 1.5rem;background:var(--charcoal)}
+.loc-card{
+  background:var(--charcoal-soft);border-radius:24px;padding:1.75rem 1.4rem;
+  border:1px solid rgba(232,223,200,.08);margin-top:2.25rem;
+}
+.loc-addr{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px solid rgba(232,223,200,.07)}
+.loc-pin{
+  width:38px;height:38px;background:var(--mint-dim);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--mint);flex-shrink:0;margin-top:2px;
+}
+.loc-name{font-family:'Trirong',serif;font-size:1.05rem;font-weight:700;color:var(--parchment);margin-bottom:.2rem}
+.loc-detail{font-size:.8rem;color:var(--text-muted);line-height:1.75}
+.transport{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.5rem}
+.t-row{display:flex;align-items:center;gap:.7rem;font-size:.83rem;color:var(--text-muted)}
+.t-icon{
+  width:30px;height:30px;background:rgba(232,223,200,.06);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;color:var(--mint);flex-shrink:0;
+}
+.t-row strong{color:var(--parchment)}
+.loc-body{font-size:.92rem;line-height:1.85;color:var(--text-muted);margin-bottom:2rem}
+
+/* ── BOOKING ── */
+#booking{
+  padding:5.5rem 1.5rem;background:var(--charcoal-soft);
+  text-align:center;position:relative;overflow:hidden;
+}
+.book-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(0,255,179,.1),transparent 70%);
+  pointer-events:none;
+}
+.book-inner{position:relative;z-index:1}
+.book-h{font-family:'Trirong',serif;font-size:2.3rem;font-weight:900;color:var(--parchment);line-height:1.38;margin-bottom:.85rem}
+.book-h em{color:var(--mint);font-style:italic}
+.book-sub{font-size:.92rem;color:var(--text-muted);line-height:1.85;margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto}
+.bform{
+  background:var(--charcoal);border:1px solid rgba(232,223,200,.1);
+  border-radius:24px;padding:1.6rem 1.4rem;
+  display:flex;flex-direction:column;gap:.9rem;text-align:left;
+  max-width:480px;margin:0 auto;
+}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fg label{font-size:.72rem;font-weight:600;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase}
+.fg input,.fg select{
+  background:rgba(232,223,200,.05);border:1px solid rgba(232,223,200,.11);
+  border-radius:8px;padding:.75rem .9rem;color:var(--parchment);
+  font-family:'IBM Plex Sans Thai',sans-serif;font-size:.88rem;
+  outline:none;transition:border-color .2s;min-height:48px;width:100%;
+}
+.fg input:focus,.fg select:focus{border-color:var(--mint)}
+.fg select option{background:var(--charcoal-soft)}
+.fg input::placeholder{color:rgba(232,223,200,.28)}
+.book-note{font-size:.75rem;color:var(--text-muted);margin-top:1rem;line-height:1.65}
+
+/* ── FOOTER ── */
+footer{background:var(--charcoal-soft);padding:3rem 1.5rem 2rem;border-top:1px solid rgba(232,223,200,.07)}
+.foot-logo{font-family:'Trirong',serif;font-weight:900;font-size:1.25rem;color:var(--parchment);margin-bottom:.4rem}
+.foot-logo em{color:var(--mint);font-style:normal}
+.foot-tag{font-size:.8rem;color:var(--text-muted);line-height:1.65;margin-bottom:1.75rem}
+.foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem}
+.foot-col h4{font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--mint);margin-bottom:.9rem}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.foot-col li a{font-size:.82rem;color:var(--text-muted);transition:color .2s;display:block;padding:.1rem 0;line-height:1.6}
+.foot-col li a:hover{color:var(--mint)}
+.foot-social{display:flex;gap:.65rem;margin-bottom:2rem}
+.soc{
+  width:36px;height:36px;background:rgba(232,223,200,.07);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--text-muted);
+  transition:background .2s,color .2s;
+}
+.soc:hover{background:var(--mint-dim);color:var(--mint)}
+.foot-bottom{padding-top:1.25rem;border-top:1px solid rgba(232,223,200,.07);font-size:.72rem;color:rgba(232,223,200,.3);line-height:1.6}
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease-out,transform .6s ease-out}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ── DESKTOP ── */
+@media(min-width:768px){
+  #nav{padding:1.4rem 3rem}
+  #nav.scrolled{padding:.8rem 3rem}
+  .nav-links{display:flex}
+  .nav-book{display:block}
+  .hamburger{display:none}
+
+  #hero{flex-direction:row;min-height:100vh}
+  .hero-img{width:65%;height:100vh;flex-shrink:0}
+  .hero-panel{width:35%;min-height:100vh;padding:8rem 3rem 3rem;justify-content:center;display:flex;flex-direction:column;gap:1.75rem}
+  .hero-panel::before{display:none}
+  .hero-h1{font-size:3.1rem}
+  .cta-row{flex-direction:row;flex-wrap:wrap}
+
+  .sec-h{font-size:2.5rem}
+  .rcard{flex:0 0 310px}
+  .rooms-scroll{padding:0 3rem 2rem}
+  .sec-label{padding:0 3rem}
+  .sec-h{padding:0 3rem}
+
+  #about{padding:7rem 0}
+  #about::before{height:70px}
+  .about-2col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding:0 3rem}
+  .about-img{margin:0;height:420px;border-radius:28px}
+  .about-h{font-size:2.8rem}
+
+  #amenities{padding:7rem 3rem}
+  .am-grid{grid-template-columns:repeat(3,1fr)}
+  .am-feat{grid-column:1/-1}
+
+  #gallery{padding:7rem 0}
+  .gal-head{padding:0 3rem}
+  .gal-strip{padding:0 3rem}
+  .gal-item{flex:0 0 260px;height:360px}
+
+  #location{padding:7rem 3rem}
+  .loc-2col{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+  .loc-card{margin-top:0}
+
+  #booking{padding:8rem 3rem}
+  .book-h{font-size:3rem}
+
+  footer{padding:4rem 3rem 2.5rem}
+  .foot-main{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;align-items:start}
+  .foot-grid{display:contents;margin:0}
+  .foot-tag{margin-bottom:1.25rem}
+}
+@media(min-width:1200px){
+  .hero-h1{font-size:3.7rem}
+  .book-h{font-size:3.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Bangkok<em>Travel</em><br>Suites</a>
+  <ul class="nav-links">
+    <li><a href="#rooms" data-lang-th="ห้องพัก" data-lang-en="Rooms">ห้องพัก</a></li>
+    <li><a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</a></li>
+    <li><a href="#amenities" data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</a></li>
+    <li><a href="#location" data-lang-th="ที่ตั้ง" data-lang-en="Location">ที่ตั้ง</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-sw" aria-label="Toggle language">
+      <i data-lucide="globe" width="14" height="14"></i>
+      <span class="lang-sw__label">TH</span>
+    </button>
+    <a href="#booking" class="nav-book" data-lang-th="จองเลย" data-lang-en="Book Now">จองเลย</a>
+    <div class="hamburger" id="hbg" aria-label="Menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="m-overlay" id="overlay"></div>
+<div class="m-drawer" id="drawer">
+  <a href="#rooms" data-lang-th="ห้องพัก" data-lang-en="Rooms">ห้องพัก</a>
+  <a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</a>
+  <a href="#amenities" data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</a>
+  <a href="#gallery" data-lang-th="แกลเลอรี่" data-lang-en="Gallery">แกลเลอรี่</a>
+  <a href="#location" data-lang-th="ที่ตั้ง" data-lang-en="Location">ที่ตั้ง</a>
+  <a href="#booking" class="m-book" data-lang-th="จองห้องพัก" data-lang-en="Book a Room">จองห้องพัก</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1685592437742-3b56edb46b15?w=1400&h=900&fit=crop" alt="Luxury suite at Bangkok Travel Suites Hotel">
+  </div>
+  <div class="hero-panel">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span data-lang-th="ถนนงามวงศ์วาน กรุงเทพมหานคร" data-lang-en="Ngamwongwan Road, Bangkok">ถนนงามวงศ์วาน กรุงเทพมหานคร</span>
+    </div>
+    <h1 class="hero-h1">
+      <span data-lang-th="ค่ำคืนที่" data-lang-en="Nights That">ค่ำคืนที่</span><br>
+      <em><span data-lang-th="เงียบสงบ" data-lang-en="Breathe">เงียบสงบ</span></em><br>
+      <span data-lang-th="กลางเมืองหลวง" data-lang-en="In the Capital">กลางเมืองหลวง</span>
+    </h1>
+    <p class="hero-sub" data-lang-th="สัมผัสความอบอุ่นของการต้อนรับแบบไทยในห้องพักร่วมสมัยกว้างขวาง บนถนนงามวงศ์วาน ใจกลางกรุงเทพฯ" data-lang-en="Experience Thai hospitality in spacious contemporary rooms on Ngamwongwan Road — the quiet pulse of Bangkok.">สัมผัสความอบอุ่นของการต้อนรับแบบไทยในห้องพักร่วมสมัยกว้างขวาง บนถนนงามวงศ์วาน ใจกลางกรุงเทพฯ</p>
+    <div class="cta-row">
+      <a href="#booking" class="btn-p">
+        <i data-lucide="calendar-check" width="16" height="16"></i>
+        <span data-lang-th="จองห้องพักเลย" data-lang-en="Reserve Your Suite">จองห้องพักเลย</span>
+      </a>
+      <a href="#rooms" class="btn-g">
+        <span data-lang-th="ดูห้องพัก" data-lang-en="Explore Rooms">ดูห้องพัก</span>
+        <i data-lucide="arrow-right" width="15" height="15"></i>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">120+</div><div class="stat-l" data-lang-th="ห้องพักสวีทส์" data-lang-en="Suite Rooms">ห้องพักสวีทส์</div></div>
+      <div><div class="stat-n">4.9</div><div class="stat-l" data-lang-th="คะแนนรีวิว" data-lang-en="Guest Rating">คะแนนรีวิว</div></div>
+      <div><div class="stat-n">15+</div><div class="stat-l" data-lang-th="ปีแห่งบริการ" data-lang-en="Years of Service">ปีแห่งบริการ</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <div class="sec-label reveal"><span data-lang-th="ประเภทห้องพัก" data-lang-en="Room Types">ประเภทห้องพัก</span></div>
+  <h2 class="sec-h reveal d1" data-lang-th="เลือกห้องพักที่ใช่" data-lang-en="Find Your Perfect Room">เลือกห้องพักที่ใช่</h2>
+  <div class="rooms-scroll">
+    <article class="rcard reveal">
+      <div class="rcard-img">
+        <img src="https://images.unsplash.com/photo-1647792855184-af42f1720b91?w=620&h=380&fit=crop" alt="Deluxe Studio room">
+        <span class="rcard-tag" data-lang-th="ยอดนิยม" data-lang-en="Popular">ยอดนิยม</span>
+      </div>
+      <div class="rcard-body">
+        <div class="rcard-name" data-lang-th="เดลักซ์ สตูดิโอ" data-lang-en="Deluxe Studio">เดลักซ์ สตูดิโอ</div>
+        <p class="rcard-desc" data-lang-th="ห้องพักขนาด 35 ตร.ม. สไตล์คอนเทมโพรารี พร้อมวิวเมืองและการตกแต่งที่ลงตัว" data-lang-en="35 sqm contemporary studio with city views and refined contemporary decor.">ห้องพักขนาด 35 ตร.ม. สไตล์คอนเทมโพรารี พร้อมวิวเมืองและการตกแต่งที่ลงตัว</p>
+        <div class="rcard-foot">
+          <div class="rcard-price">฿2,200 <small data-lang-th="/คืน" data-lang-en="/night">/คืน</small></div>
+          <div class="rcard-sz"><i data-lucide="square" width="12" height="12"></i> 35 m²</div>
+        </div>
+      </div>
+    </article>
+    <article class="rcard reveal d1">
+      <div class="rcard-img">
+        <img src="https://images.unsplash.com/photo-1731865382401-e454cf57c1c4?w=620&h=380&fit=crop" alt="Premier Suite">
+        <span class="rcard-tag" data-lang-th="แนะนำ" data-lang-en="Featured">แนะนำ</span>
+      </div>
+      <div class="rcard-body">
+        <div class="rcard-name" data-lang-th="พรีเมียร์ สวีท" data-lang-en="Premier Suite">พรีเมียร์ สวีท</div>
+        <p class="rcard-desc" data-lang-th="สวีทส์ 55 ตร.ม. พร้อมห้องนั่งเล่นแยก ระเบียงวิวพาโนรามา และอ่างแช่ตัว" data-lang-en="55 sqm suite with separate living area, panoramic balcony, and deep soaking tub.">สวีทส์ 55 ตร.ม. พร้อมห้องนั่งเล่นแยก ระเบียงวิวพาโนรามา และอ่างแช่ตัว</p>
+        <div class="rcard-foot">
+          <div class="rcard-price">฿3,800 <small data-lang-th="/คืน" data-lang-en="/night">/คืน</small></div>
+          <div class="rcard-sz"><i data-lucide="square" width="12" height="12"></i> 55 m²</div>
+        </div>
+      </div>
+    </article>
+    <article class="rcard reveal d2">
+      <div class="rcard-img">
+        <img src="https://images.unsplash.com/photo-1656313486841-2e6038fead43?w=620&h=380&fit=crop" alt="Executive Suite">
+      </div>
+      <div class="rcard-body">
+        <div class="rcard-name" data-lang-th="เอ็กเซคคิวทีฟ สวีท" data-lang-en="Executive Suite">เอ็กเซคคิวทีฟ สวีท</div>
+        <p class="rcard-desc" data-lang-th="ห้องพักระดับผู้บริหาร 70 ตร.ม. โต๊ะทำงานส่วนตัว และสิทธิ์เข้าใช้ลาวด์จ์" data-lang-en="70 sqm business-class suite with dedicated desk and executive lounge access.">ห้องพักระดับผู้บริหาร 70 ตร.ม. โต๊ะทำงานส่วนตัว และสิทธิ์เข้าใช้ลาวด์จ์</p>
+        <div class="rcard-foot">
+          <div class="rcard-price">฿5,200 <small data-lang-th="/คืน" data-lang-en="/night">/คืน</small></div>
+          <div class="rcard-sz"><i data-lucide="square" width="12" height="12"></i> 70 m²</div>
+        </div>
+      </div>
+    </article>
+    <article class="rcard reveal d3">
+      <div class="rcard-img">
+        <img src="https://images.unsplash.com/photo-1645619179966-1647b5591f80?w=620&h=380&fit=crop" alt="Penthouse Suite">
+        <span class="rcard-tag" data-lang-th="พิเศษสุด" data-lang-en="Exclusive">พิเศษสุด</span>
+      </div>
+      <div class="rcard-body">
+        <div class="rcard-name" data-lang-th="เพนต์เฮาส์ สวีท" data-lang-en="Penthouse Suite">เพนต์เฮาส์ สวีท</div>
+        <p class="rcard-desc" data-lang-th="เพนต์เฮาส์หรู 120 ตร.ม. ชั้นสูงสุด วิว 360 องศา พร้อมบัตเลอร์ส่วนตัว" data-lang-en="Luxurious 120 sqm top-floor penthouse with 360° views and personal butler service.">เพนต์เฮาส์หรู 120 ตร.ม. ชั้นสูงสุด วิว 360 องศา พร้อมบัตเลอร์ส่วนตัว</p>
+        <div class="rcard-foot">
+          <div class="rcard-price">฿12,000 <small data-lang-th="/คืน" data-lang-en="/night">/คืน</small></div>
+          <div class="rcard-sz"><i data-lucide="square" width="12" height="12"></i> 120 m²</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-2col">
+    <div class="about-inner">
+      <div class="about-label reveal">
+        <span data-lang-th="เรื่องราวของเรา" data-lang-en="Our Story">เรื่องราวของเรา</span>
+      </div>
+      <h2 class="about-h reveal d1">
+        <span data-lang-th="ที่นี่คือ" data-lang-en="Where">ที่นี่คือ</span><br>
+        <em><span data-lang-th="บ้านกลางกรุง" data-lang-en="Home Meets the City">บ้านกลางกรุง</span></em>
+      </h2>
+      <p class="about-body reveal d2" data-lang-th="Bangkok Travel Suites Hotel กำเนิดจากความเชื่อที่ว่าการพักผ่อนที่ดีไม่ใช่แค่ความหรูหรา แต่คือความรู้สึกอบอุ่นเหมือนอยู่บ้าน เราคัดสรรทุกรายละเอียดในห้องพักให้สะท้อนถึงความงามของศิลปะและวัฒนธรรมไทย ผสมผสานกับการออกแบบร่วมสมัยที่ตอบโจทย์ผู้เดินทางยุคใหม่" data-lang-en="Bangkok Travel Suites Hotel was born from the belief that great hospitality is not just luxury — it is warmth. Every detail reflects Thai art and culture, woven into contemporary design for the modern traveller.">Bangkok Travel Suites Hotel กำเนิดจากความเชื่อที่ว่าการพักผ่อนที่ดีไม่ใช่แค่ความหรูหรา แต่คือความรู้สึกอบอุ่นเหมือนอยู่บ้าน เราคัดสรรทุกรายละเอียดในห้องพักให้สะท้อนถึงความงามของศิลปะและวัฒนธรรมไทย ผสมผสานกับการออกแบบร่วมสมัยที่ตอบโจทย์ผู้เดินทางยุคใหม่</p>
+      <div class="about-quote reveal d3">
+        <p data-lang-th='"ยินดีต้อนรับสู่ Bangkok Travel Suites — ที่นี่ทุกค่ำคืนมีความหมาย"' data-lang-en='"Welcome to Bangkok Travel Suites — where every evening holds meaning."'>"ยินดีต้อนรับสู่ Bangkok Travel Suites — ที่นี่ทุกค่ำคืนมีความหมาย"</p>
+        <cite data-lang-th="ผู้อำนวยการทั่วไป" data-lang-en="General Manager">ผู้อำนวยการทั่วไป</cite>
+      </div>
+    </div>
+    <div class="about-img reveal d2">
+      <img src="https://images.unsplash.com/photo-1775866914943-ba1415a35afc?w=900&h=700&fit=crop" alt="Bangkok Travel Suites Hotel lobby interior">
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section id="amenities">
+  <div class="sec-label reveal"><span data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</span></div>
+  <h2 class="sec-h reveal d1" data-lang-th="ทุกสิ่งที่คุณต้องการ" data-lang-en="Everything You Need">ทุกสิ่งที่คุณต้องการ</h2>
+  <div class="am-grid">
+    <div class="am-item am-feat reveal">
+      <div class="am-icon"><i data-lucide="waves" width="22" height="22"></i></div>
+      <div class="am-feat-txt">
+        <div class="am-feat-name" data-lang-th="สระว่ายน้ำชั้นดาดฟ้า วิวเมือง 270°" data-lang-en="Rooftop Pool with 270° City Views">สระว่ายน้ำชั้นดาดฟ้า วิวเมือง 270°</div>
+        <div class="am-feat-desc" data-lang-th="เปิดบริการ 06:00–22:00 น. พร้อมบริการเครื่องดื่มริมสระ" data-lang-en="Open daily 06:00–22:00 with poolside bar service.">เปิดบริการ 06:00–22:00 น. พร้อมบริการเครื่องดื่มริมสระ</div>
+      </div>
+    </div>
+    <div class="am-item reveal d1">
+      <div class="am-icon"><i data-lucide="utensils" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="ห้องอาหารไทยร่วมสมัย" data-lang-en="Contemporary Thai Dining">ห้องอาหารไทยร่วมสมัย</div>
+    </div>
+    <div class="am-item reveal d2">
+      <div class="am-icon"><i data-lucide="dumbbell" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="ฟิตเนส 24 ชั่วโมง" data-lang-en="24-Hour Fitness Centre">ฟิตเนส 24 ชั่วโมง</div>
+    </div>
+    <div class="am-item reveal d1">
+      <div class="am-icon"><i data-lucide="sparkles" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="สปาและนวดไทยแท้" data-lang-en="Thai Spa & Traditional Massage">สปาและนวดไทยแท้</div>
+    </div>
+    <div class="am-item reveal d2">
+      <div class="am-icon"><i data-lucide="wifi" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="Wi-Fi ความเร็วสูงฟรีทั่วโรงแรม" data-lang-en="High-Speed Wi-Fi Throughout">Wi-Fi ความเร็วสูงฟรีทั่วโรงแรม</div>
+    </div>
+    <div class="am-item reveal d3">
+      <div class="am-icon"><i data-lucide="car" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="บริการรถรับส่งสนามบิน" data-lang-en="Airport Transfer Service">บริการรถรับส่งสนามบิน</div>
+    </div>
+    <div class="am-item reveal d1">
+      <div class="am-icon"><i data-lucide="briefcase" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="ห้องประชุมและสัมมนา" data-lang-en="Meeting & Conference Rooms">ห้องประชุมและสัมมนา</div>
+    </div>
+    <div class="am-item reveal d2">
+      <div class="am-icon"><i data-lucide="coffee" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="คาเฟ่และบาร์ลาวด์จ์" data-lang-en="Café & Lounge Bar">คาเฟ่และบาร์ลาวด์จ์</div>
+    </div>
+    <div class="am-item reveal d3">
+      <div class="am-icon"><i data-lucide="concierge-bell" width="17" height="17"></i></div>
+      <div class="am-name" data-lang-th="คอนเซียร์จบริการ 24 ชั่วโมง" data-lang-en="24-Hour Concierge Service">คอนเซียร์จบริการ 24 ชั่วโมง</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-head">
+    <div class="sec-label reveal" style="padding:0;margin-bottom:1.2rem"><span data-lang-th="แกลเลอรี่" data-lang-en="Gallery">แกลเลอรี่</span></div>
+    <h2 class="sec-h reveal d1" style="padding:0;margin-bottom:0" data-lang-th="มองผ่านเลนส์ของเรา" data-lang-en="Through Our Lens">มองผ่านเลนส์ของเรา</h2>
+  </div>
+  <div class="gal-strip" style="margin-top:2rem">
+    <div class="gal-item reveal">
+      <img src="https://images.unsplash.com/photo-1550920576-7db4e7cb61e3?w=500&h=600&fit=crop" alt="Bangkok neon lights at night">
+      <div class="gal-cap" data-lang-th="กรุงเทพยามค่ำคืน" data-lang-en="Bangkok at Night">กรุงเทพยามค่ำคืน</div>
+    </div>
+    <div class="gal-item reveal d1">
+      <img src="https://images.unsplash.com/photo-1685592437742-3b56edb46b15?w=500&h=600&fit=crop" alt="Contemporary hotel suite interior">
+      <div class="gal-cap" data-lang-th="ห้องพักคอนเทมโพรารี" data-lang-en="Contemporary Suite">ห้องพักคอนเทมโพรารี</div>
+    </div>
+    <div class="gal-item reveal d2">
+      <img src="https://images.unsplash.com/photo-1622651425388-4df203da52da?w=500&h=600&fit=crop" alt="Thai temple golden architecture">
+      <div class="gal-cap" data-lang-th="ศิลปะไทยดั้งเดิม" data-lang-en="Thai Heritage">ศิลปะไทยดั้งเดิม</div>
+    </div>
+    <div class="gal-item reveal d3">
+      <img src="https://images.unsplash.com/photo-1646974400433-901341048192?w=500&h=600&fit=crop" alt="Hotel rooftop terrace with city view">
+      <div class="gal-cap" data-lang-th="ดาดฟ้าวิวเมือง" data-lang-en="Rooftop Views">ดาดฟ้าวิวเมือง</div>
+    </div>
+    <div class="gal-item reveal d4">
+      <img src="https://images.unsplash.com/photo-1774192621035-20d11389f781?w=500&h=600&fit=crop" alt="Elegant hotel lounge">
+      <div class="gal-cap" data-lang-th="ลาวด์จ์สุดเก๋" data-lang-en="The Lounge">ลาวด์จ์สุดเก๋</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="sec-label reveal"><span data-lang-th="ที่ตั้งโรงแรม" data-lang-en="Our Location">ที่ตั้งโรงแรม</span></div>
+  <h2 class="sec-h reveal d1" data-lang-th="หาเราเจอได้ง่ายๆ" data-lang-en="Easy to Find, Hard to Leave">หาเราเจอได้ง่ายๆ</h2>
+  <div class="loc-2col">
+    <div class="reveal d1">
+      <p class="loc-body" data-lang-th="ตั้งอยู่บนถนนงามวงศ์วาน เชื่อมต่อกับทุกจุดในกรุงเทพฯ ได้อย่างสะดวกสบาย ไม่ว่าจะเดินทางโดยรถไฟฟ้า MRT หรือรถยนต์ส่วนตัว ใกล้ห้างสรรพสินค้า โรงพยาบาล และย่านธุรกิจ" data-lang-en="Situated on Ngamwongwan Road with seamless access to Bangkok's key destinations — MRT, shopping malls, hospitals, and business districts all within easy reach.">ตั้งอยู่บนถนนงามวงศ์วาน เชื่อมต่อกับทุกจุดในกรุงเทพฯ ได้อย่างสะดวกสบาย ไม่ว่าจะเดินทางโดยรถไฟฟ้า MRT หรือรถยนต์ส่วนตัว ใกล้ห้างสรรพสินค้า โรงพยาบาล และย่านธุรกิจ</p>
+      <div class="transport">
+        <div class="t-row">
+          <div class="t-icon"><i data-lucide="train-front" width="14" height="14"></i></div>
+          <div><strong data-lang-th="MRT สถานีใกล้เคียง" data-lang-en="Nearest MRT Station">MRT สถานีใกล้เคียง</strong> — <span data-lang-th="5 นาที" data-lang-en="5 mins">5 นาที</span></div>
+        </div>
+        <div class="t-row">
+          <div class="t-icon"><i data-lucide="plane" width="14" height="14"></i></div>
+          <div><strong data-lang-th="สนามบินดอนเมือง" data-lang-en="Don Mueang Airport">สนามบินดอนเมือง</strong> — <span data-lang-th="25 นาที" data-lang-en="25 mins">25 นาที</span></div>
+        </div>
+        <div class="t-row">
+          <div class="t-icon"><i data-lucide="plane-landing" width="14" height="14"></i></div>
+          <div><strong data-lang-th="สนามบินสุวรรณภูมิ" data-lang-en="Suvarnabhumi Airport">สนามบินสุวรรณภูมิ</strong> — <span data-lang-th="45 นาที" data-lang-en="45 mins">45 นาที</span></div>
+        </div>
+        <div class="t-row">
+          <div class="t-icon"><i data-lucide="shopping-bag" width="14" height="14"></i></div>
+          <div><strong data-lang-th="เซ็นทรัล แจ้งวัฒนะ" data-lang-en="Central Chaengwattana">เซ็นทรัล แจ้งวัฒนะ</strong> — <span data-lang-th="10 นาที" data-lang-en="10 mins">10 นาที</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="loc-card reveal d2">
+      <div class="loc-addr">
+        <div class="loc-pin"><i data-lucide="map-pin" width="17" height="17"></i></div>
+        <div>
+          <div class="loc-name">Bangkok Travel Suites Hotel</div>
+          <div class="loc-detail" data-lang-th="ถนนงามวงศ์วาน แขวงทุ่งสองห้อง เขตหลักสี่ กรุงเทพมหานคร 10210" data-lang-en="Ngamwongwan Road, Thung Song Hong, Lak Si, Bangkok 10210">ถนนงามวงศ์วาน แขวงทุ่งสองห้อง เขตหลักสี่ กรุงเทพมหานคร 10210</div>
+        </div>
+      </div>
+      <div class="transport">
+        <div class="t-row"><div class="t-icon"><i data-lucide="phone" width="14" height="14"></i></div><div>+66 2 123 4567</div></div>
+        <div class="t-row"><div class="t-icon"><i data-lucide="mail" width="14" height="14"></i></div><div>stay@bangkoktravelsuites.com</div></div>
+        <div class="t-row">
+          <div class="t-icon"><i data-lucide="clock" width="14" height="14"></i></div>
+          <div><span data-lang-th="เช็คอิน 14:00 / เช็คเอาต์ 12:00" data-lang-en="Check-in 14:00 / Check-out 12:00">เช็คอิน 14:00 / เช็คเอาต์ 12:00</span></div>
+        </div>
+      </div>
+      <a href="#booking" class="btn-p" style="width:100%">
+        <i data-lucide="calendar-check" width="16" height="16"></i>
+        <span data-lang-th="จองห้องพักตอนนี้" data-lang-en="Book Now">จองห้องพักตอนนี้</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="book-glow"></div>
+  <div class="book-inner">
+    <div class="sec-label reveal" style="justify-content:center;padding:0;margin-bottom:1.2rem">
+      <span data-lang-th="จองห้องพัก" data-lang-en="Make a Reservation">จองห้องพัก</span>
+    </div>
+    <h2 class="book-h reveal d1">
+      <span data-lang-th="พักกับเรา" data-lang-en="Stay With">พักกับเรา</span><br>
+      <em><span data-lang-th="คืนนี้" data-lang-en="Us Tonight">คืนนี้</span></em>
+    </h2>
+    <p class="book-sub reveal d2" data-lang-th="จองตรงผ่านเว็บไซต์รับราคาพิเศษและสิทธิพิเศษมากมาย ไม่มีค่าธรรมเนียมการจอง" data-lang-en="Book direct for the best rate and exclusive perks. No booking fee, flexible cancellation.">จองตรงผ่านเว็บไซต์รับราคาพิเศษและสิทธิพิเศษมากมาย ไม่มีค่าธรรมเนียมการจอง</p>
+    <form class="bform reveal d2" onsubmit="return false">
+      <div class="fg">
+        <label data-lang-th="วันเช็คอิน" data-lang-en="Check-In Date">วันเช็คอิน</label>
+        <input type="date" id="ci" name="checkin">
+      </div>
+      <div class="fg">
+        <label data-lang-th="วันเช็คเอาต์" data-lang-en="Check-Out Date">วันเช็คเอาต์</label>
+        <input type="date" id="co" name="checkout">
+      </div>
+      <div class="fg">
+        <label data-lang-th="ประเภทห้องพัก" data-lang-en="Room Type">ประเภทห้องพัก</label>
+        <select name="room">
+          <option value="" data-lang-th="เลือกประเภทห้อง" data-lang-en="Select Room Type">เลือกประเภทห้อง</option>
+          <option value="d" data-lang-th="เดลักซ์ สตูดิโอ — ฿2,200/คืน" data-lang-en="Deluxe Studio — ฿2,200/night">เดลักซ์ สตูดิโอ — ฿2,200/คืน</option>
+          <option value="p" data-lang-th="พรีเมียร์ สวีท — ฿3,800/คืน" data-lang-en="Premier Suite — ฿3,800/night">พรีเมียร์ สวีท — ฿3,800/คืน</option>
+          <option value="e" data-lang-th="เอ็กเซคคิวทีฟ สวีท — ฿5,200/คืน" data-lang-en="Executive Suite — ฿5,200/night">เอ็กเซคคิวทีฟ สวีท — ฿5,200/คืน</option>
+          <option value="ph" data-lang-th="เพนต์เฮาส์ สวีท — ฿12,000/คืน" data-lang-en="Penthouse Suite — ฿12,000/night">เพนต์เฮาส์ สวีท — ฿12,000/คืน</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label data-lang-th="จำนวนผู้เข้าพัก" data-lang-en="Number of Guests">จำนวนผู้เข้าพัก</label>
+        <select name="guests">
+          <option value="1" data-lang-th="1 ท่าน" data-lang-en="1 Guest">1 ท่าน</option>
+          <option value="2" data-lang-th="2 ท่าน" data-lang-en="2 Guests">2 ท่าน</option>
+          <option value="3" data-lang-th="3 ท่าน" data-lang-en="3 Guests">3 ท่าน</option>
+          <option value="4" data-lang-th="4 ท่าน" data-lang-en="4 Guests">4 ท่าน</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-p" style="width:100%;margin-top:.25rem">
+        <i data-lucide="search" width="16" height="16"></i>
+        <span data-lang-th="ตรวจสอบความพร้อม" data-lang-en="Check Availability">ตรวจสอบความพร้อม</span>
+      </button>
+    </form>
+    <p class="book-note reveal" data-lang-th="จองตรงรับส่วนลด 10% + อาหารเช้าฟรีสำหรับสมาชิกใหม่" data-lang-en="Book direct: 10% off + complimentary breakfast for new members.">จองตรงรับส่วนลด 10% + อาหารเช้าฟรีสำหรับสมาชิกใหม่</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-main">
+    <div>
+      <div class="foot-logo">Bangkok<em>Travel</em>Suites</div>
+      <p class="foot-tag" data-lang-th="ห้องพักร่วมสมัย การต้อนรับแบบไทย บนถนนงามวงศ์วาน กรุงเทพมหานคร" data-lang-en="Contemporary rooms, Thai hospitality. Ngamwongwan Road, Bangkok.">ห้องพักร่วมสมัย การต้อนรับแบบไทย บนถนนงามวงศ์วาน กรุงเทพมหานคร</p>
+      <div class="foot-social">
+        <a href="#" class="soc" aria-label="Facebook"><i data-lucide="facebook" width="15" height="15"></i></a>
+        <a href="#" class="soc" aria-label="Instagram"><i data-lucide="instagram" width="15" height="15"></i></a>
+        <a href="#" class="soc" aria-label="Line"><i data-lucide="message-circle" width="15" height="15"></i></a>
+        <a href="#" class="soc" aria-label="YouTube"><i data-lucide="youtube" width="15" height="15"></i></a>
+      </div>
+    </div>
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4 data-lang-th="ห้องพัก" data-lang-en="Rooms">ห้องพัก</h4>
+        <ul>
+          <li><a href="#rooms" data-lang-th="เดลักซ์ สตูดิโอ" data-lang-en="Deluxe Studio">เดลักซ์ สตูดิโอ</a></li>
+          <li><a href="#rooms" data-lang-th="พรีเมียร์ สวีท" data-lang-en="Premier Suite">พรีเมียร์ สวีท</a></li>
+          <li><a href="#rooms" data-lang-th="เอ็กเซคคิวทีฟ สวีท" data-lang-en="Executive Suite">เอ็กเซคคิวทีฟ สวีท</a></li>
+          <li><a href="#rooms" data-lang-th="เพนต์เฮาส์ สวีท" data-lang-en="Penthouse Suite">เพนต์เฮาส์ สวีท</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4 data-lang-th="ข้อมูล" data-lang-en="Info">ข้อมูล</h4>
+        <ul>
+          <li><a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About Us">เกี่ยวกับเรา</a></li>
+          <li><a href="#amenities" data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="#gallery" data-lang-th="แกลเลอรี่" data-lang-en="Gallery">แกลเลอรี่</a></li>
+          <li><a href="#location" data-lang-th="ที่ตั้ง" data-lang-en="Location">ที่ตั้ง</a></li>
+          <li><a href="#booking" data-lang-th="จองห้องพัก" data-lang-en="Book a Room">จองห้องพัก</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p data-lang-th="© 2026 Bangkok Travel Suites Hotel. สงวนลิขสิทธิ์ทุกประการ" data-lang-en="© 2026 Bangkok Travel Suites Hotel. All rights reserved.">© 2026 Bangkok Travel Suites Hotel. สงวนลิขสิทธิ์ทุกประการ</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<script>
+// Hamburger / mobile drawer
+var hbg=document.getElementById('hbg'),overlay=document.getElementById('overlay'),drawer=document.getElementById('drawer');
+function toggleDrawer(open){
+  hbg.classList.toggle('open',open);
+  drawer.classList.toggle('open',open);
+  overlay.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+hbg.addEventListener('click',function(){toggleDrawer(!drawer.classList.contains('open'))});
+overlay.addEventListener('click',function(){toggleDrawer(false)});
+drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggleDrawer(false)})});
+
+// Navbar shrink on scroll
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+
+// Scroll reveal
+var reveals=document.querySelectorAll('.reveal');
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}});
+},{threshold:0.1});
+reveals.forEach(function(el){ro.observe(el)});
+
+// Date inputs
+var today=new Date().toISOString().split('T')[0];
+document.getElementById('ci').min=today;
+document.getElementById('co').min=today;
+
+lucide.createIcons();
+</script>
+<script>
+(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){e.textContent=t}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+</script>
+</body>
+</html>
