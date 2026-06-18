@@ -1,3 +1,9 @@
 meta.json
 .claude-*.log
 .omc/
+
+# Secrets & build
+.env
+.env.local
+node_modules/
+.vercel/

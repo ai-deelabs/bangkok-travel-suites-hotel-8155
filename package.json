@@ -1,0 +1,10 @@
+{
+  "name": "bangkok-travel-suites",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Bangkok Travel Suites Hotel — static site with Beds24 API V2 booking proxy (test phase)",
+  "engines": {
+    "node": ">=18"
+  }
+}
