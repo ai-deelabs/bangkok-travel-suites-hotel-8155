@@ -145,7 +145,7 @@ html[lang="th"] h3{letter-spacing:0}
 
 /* ------ HERO ------ */
 .hero{
-  position:relative;height:100svh;min-height:600px;
+  position:relative;min-height:100svh;
   overflow:hidden;display:flex;align-items:flex-end;
 }
 .hero__bg{
@@ -161,7 +161,8 @@ html[lang="th"] h3{letter-spacing:0}
 }
 .hero__content{
   position:relative;z-index:2;
-  padding:2.5rem 1.4rem 4rem;width:100%;
+  /* generous top padding so the tall Thai headline always clears the fixed navbar */
+  padding:6.5rem 1.4rem 4rem;width:100%;
 }
 .hero__eyebrow{
   font-family:'IBM Plex Mono',monospace;
@@ -176,7 +177,7 @@ html[lang="th"] h3{letter-spacing:0}
   text-transform:uppercase;color:var(--ivory);
   line-height:1.1;margin-bottom:1.4rem;
 }
-html[lang="th"] .hero__h1{line-height:1.45;letter-spacing:0}
+html[lang="th"] .hero__h1{font-size:clamp(2.6rem,10vw,5.5rem);line-height:1.3;letter-spacing:0}
 html[lang="en"] .hero__h1{letter-spacing:-.025em}
 .hero__sub{
   font-size:.93rem;color:rgba(245,239,228,.72);
@@ -576,7 +577,7 @@ html[lang="th"] .footer__col-hd{letter-spacing:0}
   .nav.scrolled{padding:.85rem 3rem}
   .nav__links{display:flex;align-items:center;gap:2rem}
   .hamburger{display:none}
-  .hero__content{padding:3.5rem 3rem 5rem;max-width:680px}
+  .hero__content{padding:7rem 3rem 5rem;max-width:680px}
   .intro{padding:4.5rem 3rem 7rem}
   .rooms__hd{
     padding:0 3rem;display:flex;
@@ -644,6 +645,7 @@ html[lang="th"] .footer__col-hd{letter-spacing:0}
   <a href="#booking" class="drawer__link" data-lang-th="จองห้องพัก" data-lang-en="Reservations">จองห้องพัก</a>
 </div>
 
+<main>
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero__bg"></div>
@@ -989,6 +991,8 @@ YOUR WAY">สัมผัส
     <p class="booking__note" id="bookNote" hidden></p>
   </form>
 </section>
+
+</main>
 
 <!-- FOOTER -->
 <footer class="footer">
