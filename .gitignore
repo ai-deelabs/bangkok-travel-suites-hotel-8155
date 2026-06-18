@@ -7,3 +7,4 @@ meta.json
 .env.local
 node_modules/
 .vercel/
+.vercel

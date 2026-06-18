@@ -90,30 +90,22 @@ export async function getOffers({ arrival, departure, numAdults }) {
     throw new Beds24Error('upstream', 'Availability service error.', { status: res.status, body });
   }
 
-  // TEMP build aid: log the raw shape once so we can lock the parser against
-  // the live response, then this can be removed. Server-side log only.
-  console.log('[Beds24] offers raw response:', JSON.stringify(body));
 
-  const offer = findRoomOffer(body, ROOM_ID);
+  // Confirmed shape: { data: [ { roomId, propertyId, offers: [ { price, unitsAvailable } ] } ] }
+  const room = findRoomOffer(body, ROOM_ID);
+  const offer = room?.offers?.[0] || room; // tolerate flatter shapes too
   if (!offer) {
     return { available: false, pricePerStay: null, currency: 'THB', nights };
   }
 
-  const pricePerStay = pickNumber(
-    offer.price,
-    offer.totalPrice,
-    offer.priceTotal,
-    offer?.offers?.[0]?.price,
-    offer?.offers?.[0]?.totalPrice
-  );
-  const currency = offer.currency || offer?.offers?.[0]?.currency || 'THB';
+  const pricePerStay = pickNumber(offer.price, offer.totalPrice, offer.priceTotal);
+  const units = pickNumber(offer.unitsAvailable, offer.available, offer.quantity);
+  const currency = offer.currency || room?.currency || 'THB';
 
-  return {
-    available: pricePerStay != null && pricePerStay > 0,
-    pricePerStay,
-    currency,
-    nights,
-  };
+  // Available only when there's a positive price AND (units unknown OR units > 0).
+  const available = pricePerStay != null && pricePerStay > 0 && (units == null || units > 0);
+
+  return { available, pricePerStay, currency, nights };
 }
 
 // Walk the (array-ish) offers payload and return the node matching our roomId.
@@ -177,7 +169,6 @@ export async function createBooking({
     throw new Beds24Error('upstream', 'Booking service error.', { status: res.status, body });
   }
 
-  console.log('[Beds24] bookings raw response:', JSON.stringify(body));
 
   // Response is an array of per-booking results. Accept a few field shapes.
   const first = Array.isArray(body) ? body[0] : body?.data?.[0] || body;

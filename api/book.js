@@ -2,7 +2,7 @@
 // Body: { fullName, email, phone, arrival, departure, numAdult }
 // Server-side proxy that creates a Beds24 booking. Returns { ok, bookingId }.
 // Never leaks the token or raw upstream errors to the client.
-import { createBooking, Beds24Error } from '../lib/beds24.js';
+import { createBooking, Beds24Error } from './_lib/beds24.js';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

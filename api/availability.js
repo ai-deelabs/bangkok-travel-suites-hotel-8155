@@ -1,7 +1,7 @@
 // GET /api/availability?arrival=YYYY-MM-DD&departure=YYYY-MM-DD&numAdults=N
 // Server-side proxy to Beds24 offers. Returns clean JSON; never leaks the token
 // or raw upstream errors.
-import { getOffers, Beds24Error } from '../lib/beds24.js';
+import { getOffers, Beds24Error } from './_lib/beds24.js';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 

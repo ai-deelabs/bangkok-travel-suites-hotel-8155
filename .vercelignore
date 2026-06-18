@@ -1,0 +1,8 @@
+# Never upload secrets or dev-only files to the deployment
+.env
+.env.local
+.env.example
+.git
+.prompts
+node_modules
+.vercel
