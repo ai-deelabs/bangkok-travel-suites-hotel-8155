@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>จองห้องพัก — Bangkok Travel Suites Hotel</title>
+<meta name="description" content="จองห้องพักโรงแรมแบงค็อก ทราเวล สวีทส์ ตรวจสอบห้องว่างและราคาจริง พร้อมยืนยันการจองออนไลน์">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav scrolled" id="nav">
+  <a href="/" class="nav__logo">
+    Bangkok Travel Suites
+    <small>Hotel</small>
+  </a>
+  <nav class="nav__links">
+    <a href="/#rooms" data-lang-th="ห้องพัก" data-lang-en="Rooms">ห้องพัก</a>
+    <a href="/#amenities" data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</a>
+    <a href="/#dining" data-lang-th="ร้านอาหาร" data-lang-en="Dining">ร้านอาหาร</a>
+    <a href="/#location" data-lang-th="ที่ตั้ง" data-lang-en="Location">ที่ตั้ง</a>
+  </nav>
+  <div class="nav__right">
+    <a href="/" class="nav__book">
+      <i data-lucide="arrow-left" width="14" height="14"></i>
+      <span data-lang-th="หน้าหลัก" data-lang-en="Home">หน้าหลัก</span>
+    </a>
+    <button class="lang-sw" aria-label="Switch language">
+      <i data-lucide="globe" width="14" height="14"></i>
+      <span class="lang-sw__label">TH</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer">
+  <a href="/#rooms" class="drawer__link" data-lang-th="ห้องพัก" data-lang-en="Rooms">ห้องพัก</a>
+  <a href="/#amenities" class="drawer__link" data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</a>
+  <a href="/#dining" class="drawer__link" data-lang-th="ร้านอาหาร" data-lang-en="Dining">ร้านอาหาร</a>
+  <a href="/#location" class="drawer__link" data-lang-th="ที่ตั้ง" data-lang-en="Location">ที่ตั้ง</a>
+  <a href="/" class="drawer__link" data-lang-th="หน้าหลัก" data-lang-en="Home">หน้าหลัก</a>
+</div>
+
+<main>
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <p class="sec-eye rv">&#8212; RESERVATIONS</p>
+  <h2 class="sec-title rv" data-lang-th="จองห้องพักของคุณ" data-lang-en="BOOK YOUR STAY">จองห้องพักของคุณ</h2>
+  <p class="booking__sub rv" data-lang-th="เลือกวันเข้าพัก ระบบจะตรวจสอบห้องว่างและราคาจริงจาก Beds24 จากนั้นกรอกข้อมูลเพื่อยืนยันการจอง" data-lang-en="Pick your dates to see live availability and pricing from Beds24, then enter your details to confirm the booking.">เลือกวันเข้าพัก ระบบจะตรวจสอบห้องว่างและราคาจริงจาก Beds24 จากนั้นกรอกข้อมูลเพื่อยืนยันการจอง</p>
+  <form class="booking__form rv" id="bookForm" novalidate>
+    <div class="booking__grid">
+      <div class="booking__field">
+        <label for="bk-ci" data-lang-th="วันเช็คอิน" data-lang-en="Check-in">วันเช็คอิน</label>
+        <input class="booking__input" type="date" id="bk-ci" required>
+      </div>
+      <div class="booking__field">
+        <label for="bk-co" data-lang-th="วันเช็คเอาต์" data-lang-en="Check-out">วันเช็คเอาต์</label>
+        <input class="booking__input" type="date" id="bk-co" required>
+      </div>
+    </div>
+    <div class="booking__grid">
+      <div class="booking__field">
+        <label data-lang-th="ประเภทห้องพัก" data-lang-en="Room type">ประเภทห้องพัก</label>
+        <!-- Test phase: single room wired to Beds24 (Deluxe, roomId 694923) -->
+        <div class="booking__fixed" id="bk-room-fixed" data-lang-th="ห้องดีลักซ์" data-lang-en="Deluxe Room">ห้องดีลักซ์</div>
+      </div>
+      <div class="booking__field">
+        <label for="bk-adult" data-lang-th="จำนวนผู้เข้าพัก" data-lang-en="Guests">จำนวนผู้เข้าพัก</label>
+        <select class="booking__input" id="bk-adult">
+          <option value="1" data-lang-th="1 ท่าน" data-lang-en="1 Guest">1 ท่าน</option>
+          <option value="2" selected data-lang-th="2 ท่าน" data-lang-en="2 Guests">2 ท่าน</option>
+          <option value="3" data-lang-th="3 ท่าน" data-lang-en="3 Guests">3 ท่าน</option>
+          <option value="4" data-lang-th="4 ท่าน" data-lang-en="4 Guests">4 ท่าน</option>
+        </select>
+      </div>
+    </div>
+    <p class="booking__price" id="bookPrice" hidden></p>
+    <div class="booking__field">
+      <label for="bk-name" data-lang-th="ชื่อ-นามสกุล" data-lang-en="Full name">ชื่อ-นามสกุล</label>
+      <input class="booking__input" type="text" id="bk-name" autocomplete="name" required>
+    </div>
+    <div class="booking__grid">
+      <div class="booking__field">
+        <label for="bk-email" data-lang-th="อีเมล" data-lang-en="Email">อีเมล</label>
+        <input class="booking__input" type="email" id="bk-email" autocomplete="email" required>
+      </div>
+      <div class="booking__field">
+        <label for="bk-phone" data-lang-th="เบอร์โทรศัพท์" data-lang-en="Phone">เบอร์โทรศัพท์</label>
+        <input class="booking__input" type="tel" id="bk-phone" autocomplete="tel" required>
+      </div>
+    </div>
+    <button class="btn-red booking__btn" type="submit" id="bookBtn" disabled>
+      <i data-lucide="calendar-check" width="15" height="15"></i>
+      <span id="bookBtnLabel" data-lang-th="ยืนยันการจอง" data-lang-en="Confirm Booking">ยืนยันการจอง</span>
+    </button>
+    <p class="booking__note" id="bookNote" hidden></p>
+  </form>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__logo">Bangkok Travel Suites</div>
+  <div class="footer__tag">&#8212; Ngamwongwan Road, Nonthaburi</div>
+  <div class="footer__grid">
+    <div>
+      <p class="footer__col-hd" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</p>
+      <p style="font-size:.84rem;color:rgba(245,239,228,.4);line-height:1.9;max-width:240px" data-lang-th="โรงแรมบางกอก ทราเวล สวีทส์ ห้องพักกว้างขวาง 40 ห้อง สไตล์ร่วมสมัย พร้อมการต้อนรับอบอุ่นแบบไทย บนถนนงามวงศ์วาน" data-lang-en="Bangkok Travel Suites Hotel — 40 spacious, contemporary rooms with warm Thai hospitality on Ngamwongwan Road.">โรงแรมบางกอก ทราเวล สวีทส์ ห้องพักกว้างขวาง 40 ห้อง สไตล์ร่วมสมัย พร้อมการต้อนรับอบอุ่นแบบไทย บนถนนงามวงศ์วาน</p>
+      <div class="footer__socials">
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook" width="17" height="17"></i></a>
+        <a href="#" aria-label="Instagram"><i data-lucide="instagram" width="17" height="17"></i></a>
+        <a href="#" aria-label="Line"><i data-lucide="message-circle" width="17" height="17"></i></a>
+      </div>
+    </div>
+    <div>
+      <p class="footer__col-hd" data-lang-th="เมนู" data-lang-en="Navigate">เมนู</p>
+      <ul class="footer__list">
+        <li><a href="/#rooms" data-lang-th="ห้องพัก" data-lang-en="Rooms &amp; Suites">ห้องพัก</a></li>
+        <li><a href="/#amenities" data-lang-th="สิ่งอำนวยความสะดวก" data-lang-en="Amenities">สิ่งอำนวยความสะดวก</a></li>
+        <li><a href="/#dining" data-lang-th="ร้านอาหาร" data-lang-en="Dining">ร้านอาหาร</a></li>
+        <li><a href="/#location" data-lang-th="ที่ตั้ง" data-lang-en="Location">ที่ตั้ง</a></li>
+        <li><a href="/booking.html" data-lang-th="จองห้องพัก" data-lang-en="Reservations">จองห้องพัก</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-hd" data-lang-th="นโยบาย" data-lang-en="Policies">นโยบาย</p>
+      <ul class="footer__list">
+        <li><a href="#" data-lang-th="เช็คอิน 14:00 น." data-lang-en="Check-in 14:00">เช็คอิน 14:00 น.</a></li>
+        <li><a href="#" data-lang-th="เช็คเอาต์ 12:00 น." data-lang-en="Check-out 12:00">เช็คเอาต์ 12:00 น.</a></li>
+        <li><a href="#" data-lang-th="การยกเลิกการจอง" data-lang-en="Cancellation">การยกเลิกการจอง</a></li>
+        <li><a href="#" data-lang-th="นโยบายสัตว์เลี้ยง" data-lang-en="Pet Policy">นโยบายสัตว์เลี้ยง</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-hd" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</p>
+      <div class="footer__ci"><span class="footer__ci-ico"><i data-lucide="phone" width="13" height="13"></i></span><span>02-965-9661-2 · 092-261-4394</span></div>
+      <div class="footer__ci"><span class="footer__ci-ico"><i data-lucide="printer" width="13" height="13"></i></span><span data-lang-th="แฟกซ์ 02-965-9800" data-lang-en="Fax 02-965-9800">แฟกซ์ 02-965-9800</span></div>
+      <div class="footer__ci"><span class="footer__ci-ico"><i data-lucide="message-circle" width="13" height="13"></i></span><span>LINE: bangkoktravelsuites</span></div>
+      <div class="footer__ci"><span class="footer__ci-ico"><i data-lucide="map-pin" width="13" height="13"></i></span><span data-lang-th="86/3 หมู่ 9 ถ.งามวงศ์วาน บางเขน เมือง นนทบุรี 11000" data-lang-en="86/3 Moo.9 Ngamwongwan Rd, Bangkhen, Muang, Nonthaburi 11000">86/3 หมู่ 9 ถ.งามวงศ์วาน บางเขน เมือง นนทบุรี 11000</span></div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span data-lang-th="© 2026 Bangkok Travel Suites Hotel. สงวนลิขสิทธิ์" data-lang-en="© 2026 Bangkok Travel Suites Hotel. All rights reserved.">© 2026 Bangkok Travel Suites Hotel. สงวนลิขสิทธิ์</span>
+    <span data-lang-th="ออกแบบด้วยความใส่ใจ" data-lang-en="Crafted with care">ออกแบบด้วยความใส่ใจ</span>
+  </div>
+</footer>
+
+<script>
+lucide.createIcons();
+
+// Nav scroll
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){
+  nav.classList.toggle('scrolled',window.scrollY>70);
+},{passive:true});
+
+// Hamburger / drawer
+var hbg=document.getElementById('hamburger');
+var drw=document.getElementById('drawer');
+var scrim=document.getElementById('scrim');
+function openDrawer(){hbg.classList.add('open');drw.classList.add('open');scrim.classList.add('open')}
+function closeDrawer(){hbg.classList.remove('open');drw.classList.remove('open');scrim.classList.remove('open')}
+hbg.addEventListener('click',function(){drw.classList.contains('open')?closeDrawer():openDrawer()});
+scrim.addEventListener('click',closeDrawer);
+document.querySelectorAll('.drawer__link').forEach(function(l){l.addEventListener('click',closeDrawer)});
+
+// Scroll reveal
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
+
+/* ------ BEDS24 BOOKING (calls OUR backend only — token stays server-side) ------ */
+(function(){
+  var form=document.getElementById('bookForm');
+  if(!form)return;
+  var ci=document.getElementById('bk-ci'),co=document.getElementById('bk-co');
+  var adult=document.getElementById('bk-adult');
+  var name=document.getElementById('bk-name'),email=document.getElementById('bk-email'),phone=document.getElementById('bk-phone');
+  var price=document.getElementById('bookPrice'),note=document.getElementById('bookNote');
+  var btn=document.getElementById('bookBtn'),btnLabel=document.getElementById('bookBtnLabel');
+
+  var lang=function(){return localStorage.getItem('site-lang')||'th'};
+  // Set bilingual text on an element so the global TH/EN switcher keeps it in sync.
+  var setText=function(el,th,en){el.setAttribute('data-lang-th',th);el.setAttribute('data-lang-en',en);el.textContent=lang()==='en'?en:th};
+  var showNote=function(th,en,ok){setText(note,th,en);note.classList.toggle('is-ok',!!ok);note.hidden=false};
+  var hideNote=function(){note.hidden=true};
+  var emailOk=function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)};
+  var iso=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)};
+  var fmtBaht=function(n){return '฿'+Number(n).toLocaleString('en-US')};
+
+  // min check-in = today; check-out always after check-in
+  var t=new Date();
+  ci.min=iso(t);co.min=iso(new Date(t.getTime()+864e5));
+
+  var available=false;       // latest availability result
+  var lastKey='';            // dates+guests the result belongs to
+  var inflight=0;            // request sequence guard against races
+
+  function datesValid(){return ci.value&&co.value&&co.value>ci.value}
+  function setBookable(ok){available=ok;btn.disabled=!ok}
+
+  function checkAvailability(){
+    setBookable(false);
+    if(!datesValid()){price.hidden=true;return}
+    var key=ci.value+'|'+co.value+'|'+adult.value;lastKey=key;
+    var seq=++inflight;
+    price.hidden=false;price.classList.remove('is-none');
+    setText(price,'กำลังตรวจสอบห้องว่าง…','Checking availability…');
+    var url='/api/availability?arrival='+ci.value+'&departure='+co.value+'&numAdults='+adult.value;
+    fetch(url).then(function(r){return r.json().then(function(d){return {status:r.status,d:d}})}).then(function(res){
+      if(seq!==inflight||key!==lastKey)return; // a newer request superseded this one
+      if(res.status===401){setText(price,'โทเค็นหมดอายุ กรุณาสร้างใหม่','Token expired — please regenerate.');price.classList.add('is-none');return}
+      if(res.status!==200){setText(price,'ตรวจสอบราคาไม่สำเร็จ กรุณาลองใหม่','Could not check availability. Please try again.');price.classList.add('is-none');return}
+      var d=res.d;
+      if(d.available&&d.pricePerStay){
+        var th='ราคารวม '+fmtBaht(d.pricePerStay)+' · '+d.nights+' คืน';
+        var en='Total '+fmtBaht(d.pricePerStay)+' · '+d.nights+' night'+(d.nights>1?'s':'');
+        setText(price,th,en);price.classList.remove('is-none');
+        setBookable(true);
+      }else{
+        setText(price,'ไม่มีห้องว่างสำหรับวันที่เลือก','No availability for the selected dates.');
+        price.classList.add('is-none');
+      }
+    }).catch(function(){
+      if(seq!==inflight)return;
+      setText(price,'เครือข่ายมีปัญหา กรุณาลองใหม่','Network error. Please try again.');price.classList.add('is-none');
+    });
+  }
+
+  // Debounce availability checks on date/guest change
+  var deb;
+  function onChange(){
+    if(ci.value){var n=new Date(ci.value+'T00:00:00');n.setDate(n.getDate()+1);co.min=iso(n);if(co.value&&co.value<=ci.value)co.value=''}
+    hideNote();clearTimeout(deb);deb=setTimeout(checkAvailability,350);
+  }
+  [ci,co,adult].forEach(function(el){el.addEventListener('change',onChange)});
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!datesValid()){showNote('กรุณาเลือกวันเข้าพักให้ถูกต้อง','Please select valid dates.');return}
+    if(!available){showNote('กรุณาตรวจสอบห้องว่างก่อนทำการจอง','Please check availability first.');return}
+    if(!name.value.trim()){showNote('กรุณากรอกชื่อ-นามสกุล','Please enter your full name.');name.focus();return}
+    if(!emailOk(email.value.trim())){showNote('กรุณากรอกอีเมลให้ถูกต้อง','Please enter a valid email.');email.focus();return}
+    if(!phone.value.trim()){showNote('กรุณากรอกเบอร์โทรศัพท์','Please enter your phone number.');phone.focus();return}
+
+    hideNote();
+    btn.disabled=true;btn.classList.add('is-loading');
+    var prevTh=btnLabel.getAttribute('data-lang-th'),prevEn=btnLabel.getAttribute('data-lang-en');
+    setText(btnLabel,'กำลังจอง…','Booking…');
+
+    fetch('/api/book',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({fullName:name.value.trim(),email:email.value.trim(),phone:phone.value.trim(),
+        arrival:ci.value,departure:co.value,numAdult:parseInt(adult.value,10)})
+    }).then(function(r){return r.json().then(function(d){return {status:r.status,d:d}})}).then(function(res){
+      if(res.status===200&&res.d&&res.d.ok){
+        form.reset();price.hidden=true;setBookable(false);
+        showNote('จองสำเร็จ! หมายเลขการจองของคุณคือ #'+res.d.bookingId,'Booking confirmed! Your reference is #'+res.d.bookingId,true);
+      }else if(res.status===401){
+        showNote('โทเค็นหมดอายุ กรุณาแจ้งโรงแรม','Session token expired — please contact the hotel.');
+      }else if(res.status===409){
+        showNote('ขออภัย วันที่เลือกไม่ว่างแล้ว','Sorry, those dates are no longer available.');checkAvailability();
+      }else{
+        showNote('ไม่สามารถทำการจองได้ กรุณาลองใหม่','Could not complete the booking. Please try again.');
+      }
+    }).catch(function(){
+      showNote('เครือข่ายมีปัญหา กรุณาลองใหม่','Network error. Please try again.');
+    }).finally(function(){
+      btn.classList.remove('is-loading');btn.disabled=!available;
+      setText(btnLabel,prevTh,prevEn);
+    });
+  });
+})();
+</script>
+
+<script>(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){e.textContent=t}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();</script>
+</body>
+</html>
