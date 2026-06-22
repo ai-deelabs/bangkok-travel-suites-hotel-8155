@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Bangkok Travel Suites Hotel — static site with Beds24 API V2 booking proxy (test phase)",
+  "description": "Bangkok Travel Suites Hotel — static marketing website",
   "engines": {
     "node": ">=18"
   }
