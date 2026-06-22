@@ -68,18 +68,16 @@
     </div>
     <div class="booking__grid">
       <div class="booking__field">
-        <label data-lang-th="ประเภทห้องพัก" data-lang-en="Room type">ประเภทห้องพัก</label>
-        <!-- Test phase: single room wired to Beds24 (Deluxe, roomId 694923) -->
-        <div class="booking__fixed" id="bk-room-fixed" data-lang-th="ห้องดีลักซ์" data-lang-en="Deluxe Room">ห้องดีลักซ์</div>
+        <label for="bk-room" data-lang-th="ประเภทห้องพัก" data-lang-en="Room type">ประเภทห้องพัก</label>
+        <!-- Options are populated from /api/rooms (single source of truth: ROOMS in _lib/beds24.js) -->
+        <select class="booking__input" id="bk-room" disabled>
+          <option data-lang-th="กำลังโหลด…" data-lang-en="Loading…">กำลังโหลด…</option>
+        </select>
       </div>
       <div class="booking__field">
         <label for="bk-adult" data-lang-th="จำนวนผู้เข้าพัก" data-lang-en="Guests">จำนวนผู้เข้าพัก</label>
-        <select class="booking__input" id="bk-adult">
-          <option value="1" data-lang-th="1 ท่าน" data-lang-en="1 Guest">1 ท่าน</option>
-          <option value="2" selected data-lang-th="2 ท่าน" data-lang-en="2 Guests">2 ท่าน</option>
-          <option value="3" data-lang-th="3 ท่าน" data-lang-en="3 Guests">3 ท่าน</option>
-          <option value="4" data-lang-th="4 ท่าน" data-lang-en="4 Guests">4 ท่าน</option>
-        </select>
+        <!-- Options are rebuilt from the selected room's max guests -->
+        <select class="booking__input" id="bk-adult"></select>
       </div>
     </div>
     <p class="booking__price" id="bookPrice" hidden></p>
@@ -183,7 +181,7 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
   var form=document.getElementById('bookForm');
   if(!form)return;
   var ci=document.getElementById('bk-ci'),co=document.getElementById('bk-co');
-  var adult=document.getElementById('bk-adult');
+  var room=document.getElementById('bk-room'),adult=document.getElementById('bk-adult');
   var name=document.getElementById('bk-name'),email=document.getElementById('bk-email'),phone=document.getElementById('bk-phone');
   var price=document.getElementById('bookPrice'),note=document.getElementById('bookNote');
   var btn=document.getElementById('bookBtn'),btnLabel=document.getElementById('bookBtnLabel');
@@ -201,6 +199,44 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
   var t=new Date();
   ci.min=iso(t);co.min=iso(new Date(t.getTime()+864e5));
 
+  // Rebuild the guest dropdown 1..max, keeping the current pick when it still fits.
+  function setGuestOptions(max){
+    var cur=parseInt(adult.value,10)||2;
+    adult.innerHTML='';
+    for(var i=1;i<=max;i++){
+      var o=document.createElement('option');
+      o.value=String(i);
+      o.setAttribute('data-lang-th',i+' ท่าน');
+      o.setAttribute('data-lang-en',i+(i>1?' Guests':' Guest'));
+      o.textContent=lang()==='en'?o.getAttribute('data-lang-en'):o.getAttribute('data-lang-th');
+      adult.appendChild(o);
+    }
+    adult.value=String(Math.min(cur,max)||1);
+  }
+  function selectedMax(){var o=room.options[room.selectedIndex];return o?(parseInt(o.getAttribute('data-max'),10)||2):2}
+  function onRoomChange(){setGuestOptions(selectedMax());onChange();}
+
+  // Populate room types from our backend (single source of truth: ROOMS in _lib/beds24.js).
+  function loadRooms(){
+    fetch('/api/rooms').then(function(r){return r.json()}).then(function(d){
+      var rooms=(d&&d.rooms)||[];
+      if(!rooms.length){room.disabled=true;return}
+      room.innerHTML='';
+      rooms.forEach(function(rm,idx){
+        var o=document.createElement('option');
+        o.value=rm.roomId;
+        o.setAttribute('data-max',rm.maxAdult||2);
+        o.setAttribute('data-lang-th',rm.nameTh);
+        o.setAttribute('data-lang-en',rm.nameEn);
+        o.textContent=lang()==='en'?rm.nameEn:rm.nameTh;
+        if(idx===0)o.selected=true;
+        room.appendChild(o);
+      });
+      room.disabled=false;
+      setGuestOptions(selectedMax());
+    }).catch(function(){room.disabled=true});
+  }
+
   var available=false;       // latest availability result
   var lastKey='';            // dates+guests the result belongs to
   var inflight=0;            // request sequence guard against races
@@ -211,11 +247,12 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
   function checkAvailability(){
     setBookable(false);
     if(!datesValid()){price.hidden=true;return}
-    var key=ci.value+'|'+co.value+'|'+adult.value;lastKey=key;
+    var key=ci.value+'|'+co.value+'|'+room.value+'|'+adult.value;lastKey=key;
     var seq=++inflight;
     price.hidden=false;price.classList.remove('is-none');
     setText(price,'กำลังตรวจสอบห้องว่าง…','Checking availability…');
-    var url='/api/availability?arrival='+ci.value+'&departure='+co.value+'&numAdults='+adult.value;
+    var url='/api/availability?arrival='+ci.value+'&departure='+co.value+'&numAdults='+adult.value
+      +(room.value?'&roomId='+encodeURIComponent(room.value):'');
     fetch(url).then(function(r){return r.json().then(function(d){return {status:r.status,d:d}})}).then(function(res){
       if(seq!==inflight||key!==lastKey)return; // a newer request superseded this one
       if(res.status===401){setText(price,'โทเค็นหมดอายุ กรุณาสร้างใหม่','Token expired — please regenerate.');price.classList.add('is-none');return}
@@ -243,6 +280,11 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
     hideNote();clearTimeout(deb);deb=setTimeout(checkAvailability,350);
   }
   [ci,co,adult].forEach(function(el){el.addEventListener('change',onChange)});
+  room.addEventListener('change',onRoomChange);
+
+  // Baseline guest options in case /api/rooms is slow or unavailable, then load rooms.
+  setGuestOptions(2);
+  loadRooms();
 
   form.addEventListener('submit',function(e){
     e.preventDefault();
@@ -260,7 +302,7 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
     fetch('/api/book',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({fullName:name.value.trim(),email:email.value.trim(),phone:phone.value.trim(),
-        arrival:ci.value,departure:co.value,numAdult:parseInt(adult.value,10)})
+        arrival:ci.value,departure:co.value,numAdult:parseInt(adult.value,10),roomId:room.value})
     }).then(function(r){return r.json().then(function(d){return {status:r.status,d:d}})}).then(function(res){
       if(res.status===200&&res.d&&res.d.ok){
         form.reset();price.hidden=true;setBookable(false);

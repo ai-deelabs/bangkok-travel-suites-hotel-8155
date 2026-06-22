@@ -22,6 +22,30 @@ const BASE = 'https://beds24.com/api/v2';
 const PROPERTY_ID = process.env.BEDS24_PROPERTY_ID || '335864';
 const ROOM_ID = process.env.BEDS24_ROOM_ID || '694923';
 
+// ---------------------------------------------------------------------------
+// ROOM CATALOG — the single source of truth for which rooms are bookable.
+// To add a room: create it in Beds24, then add one entry here with its Beds24
+// roomId. It then appears in the booking dropdown (via /api/rooms) and is
+// accepted by the availability/booking endpoints automatically. List order =
+// dropdown order. maxAdult caps the guest selector and must not exceed the
+// room's Beds24 maxPeople.
+// ---------------------------------------------------------------------------
+export const ROOMS = [
+  { roomId: '696184', nameTh: 'ห้องเตียงเดี่ยว', nameEn: 'Standard Double', maxAdult: 2 },
+  { roomId: '694923', nameTh: 'ห้องเตียงคู่', nameEn: 'Standard Twin', maxAdult: 2 },
+  { roomId: '696185', nameTh: 'ห้องแฟมิลี่', nameEn: 'Family Room', maxAdult: 4 },
+];
+
+/** True if `id` is a known, bookable room. */
+export function isValidRoom(id) {
+  return ROOMS.some((r) => r.roomId === String(id));
+}
+
+/** Public room list for the frontend dropdown — no secrets, safe to expose. */
+export function roomCatalog() {
+  return ROOMS.map((r) => ({ ...r }));
+}
+
 // Refresh tokens this many ms before the access token's stated expiry, so an
 // in-flight request never races the deadline.
 const EXPIRY_BUFFER_MS = 60_000;
@@ -145,7 +169,7 @@ function pickNumber(...vals) {
  * GET /inventory/rooms/offers — live availability + price for our Deluxe room.
  * Returns { available, pricePerStay, currency, nights }.
  */
-export async function getOffers({ arrival, departure, numAdults }) {
+export async function getOffers({ arrival, departure, numAdults, roomId = ROOM_ID }) {
   const nights = nightsBetween(arrival, departure);
   const qs = new URLSearchParams({
     propertyId: String(PROPERTY_ID),
@@ -164,7 +188,7 @@ export async function getOffers({ arrival, departure, numAdults }) {
   }
 
   // Confirmed shape: { data: [ { roomId, propertyId, offers: [ { price, unitsAvailable } ] } ] }
-  const room = findRoomOffer(body, ROOM_ID);
+  const room = findRoomOffer(body, roomId);
   const offer = room?.offers?.[0] || room; // tolerate flatter shapes too
   if (!offer) {
     return { available: false, pricePerStay: null, currency: 'THB', nights };
@@ -207,10 +231,11 @@ export async function createBooking({
   lastName,
   email,
   phone,
+  roomId = ROOM_ID,
 }) {
   const payload = [
     {
-      roomId: Number(ROOM_ID),
+      roomId: Number(roomId),
       status: 'confirmed',
       arrival,
       departure,

@@ -2,7 +2,7 @@
 // Body: { fullName, email, phone, arrival, departure, numAdult }
 // Server-side proxy that creates a Beds24 booking. Returns { ok, bookingId }.
 // Never leaks the token or raw upstream errors to the client.
-import { createBooking, Beds24Error } from './_lib/beds24.js';
+import { createBooking, isValidRoom, Beds24Error } from './_lib/beds24.js';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,9 +24,12 @@ export default async function handler(req, res) {
   const fullName = String(body.fullName || '').trim();
   const email = String(body.email || '').trim();
   const phone = String(body.phone || '').trim();
-  const { arrival, departure } = body;
+  const { arrival, departure, roomId } = body;
   const numAdult = parseInt(body.numAdult, 10);
 
+  if (roomId != null && !isValidRoom(roomId)) {
+    return res.status(400).json({ error: 'invalid_input', message: 'Unknown room type.' });
+  }
   if (!fullName) {
     return res.status(400).json({ error: 'invalid_input', message: 'Full name is required.' });
   }
@@ -57,6 +60,7 @@ export default async function handler(req, res) {
       lastName,
       email,
       phone,
+      roomId,
     });
     return res.status(200).json({ ok: true, bookingId });
   } catch (err) {
