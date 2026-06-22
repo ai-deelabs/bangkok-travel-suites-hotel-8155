@@ -101,6 +101,7 @@ YOUR WAY">สัมผัส
     <div class="track">
 
       <div class="rcard rv">
+        <a class="rcard__link" href="/booking.html?room=696184" aria-label="Book Standard Double"></a>
         <img class="rcard__img" src="https://images.unsplash.com/photo-1776763018972-588e27bf6511?w=600&h=400&fit=crop" alt="Standard Double room">
         <div class="rcard__grad"></div>
         <div class="rcard__body">
@@ -116,6 +117,7 @@ YOUR WAY">สัมผัส
       </div>
 
       <div class="rcard rv d1">
+        <a class="rcard__link" href="/booking.html?room=694923" aria-label="Book Standard Twin"></a>
         <img class="rcard__img" src="https://images.unsplash.com/photo-1758448755969-8791367cf5c5?w=600&h=400&fit=crop" alt="Standard Twin room">
         <div class="rcard__grad"></div>
         <div class="rcard__body">
@@ -131,6 +133,7 @@ YOUR WAY">สัมผัส
       </div>
 
       <div class="rcard rv d2">
+        <a class="rcard__link" href="/booking.html?room=696185" aria-label="Book Family Room"></a>
         <img class="rcard__img" src="https://images.unsplash.com/photo-1638277000768-005d326db4b2?w=600&h=400&fit=crop" alt="Family room">
         <div class="rcard__grad"></div>
         <div class="rcard__body">
@@ -403,14 +406,16 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
 
 // Drag-to-scroll room track
 var tw=document.getElementById('trackWrap');
-var isDn=false,sx,sl;
-tw.addEventListener('mousedown',function(e){isDn=true;sx=e.pageX-tw.offsetLeft;sl=tw.scrollLeft});
+var isDn=false,sx,sl,dragged=false;
+tw.addEventListener('mousedown',function(e){isDn=true;dragged=false;sx=e.pageX-tw.offsetLeft;sl=tw.scrollLeft});
 tw.addEventListener('mouseleave',function(){isDn=false});
 tw.addEventListener('mouseup',function(){isDn=false});
 tw.addEventListener('mousemove',function(e){
-  if(!isDn)return;e.preventDefault();
+  if(!isDn)return;e.preventDefault();dragged=true;
   tw.scrollLeft=sl-(e.pageX-tw.offsetLeft-sx)*1.4;
 });
+// Suppress the card link's click if the press was actually a drag.
+tw.addEventListener('click',function(e){if(dragged)e.preventDefault()},true);
 
 </script>
 

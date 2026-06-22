@@ -233,6 +233,9 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
         room.appendChild(o);
       });
       room.disabled=false;
+      // Preselect a room from ?room=<roomId> (e.g. linked from a homepage card).
+      var pre=new URLSearchParams(location.search).get('room');
+      if(pre&&[].some.call(room.options,function(o){return o.value===pre})){room.value=pre}
       setGuestOptions(selectedMax());
     }).catch(function(){room.disabled=true});
   }
