@@ -452,6 +452,13 @@ html[lang="th"] .quote__text{letter-spacing:0}
 }
 .loc__img img{width:100%;height:100%;object-fit:cover}
 .loc__list{display:flex;flex-direction:column;gap:.9rem}
+.loc-cat{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);margin:1.5rem 0 .1rem;display:flex;align-items:center;gap:.6rem;
+}
+.loc-cat:first-child{margin-top:0}
+.loc-cat::after{content:"";flex:1;height:1px;background:rgba(155,27,48,.18)}
 .loc-item{
   display:flex;align-items:center;gap:1rem;
   padding:1rem 1.1rem;border-radius:3px;
@@ -461,6 +468,10 @@ html[lang="th"] .quote__text{letter-spacing:0}
 }
 .loc-item:hover{background:rgba(155,27,48,.1)}
 .loc-item__ico{color:var(--red);flex-shrink:0}
+.loc-item__thumb{
+  width:62px;height:62px;flex-shrink:0;border-radius:3px;
+  object-fit:cover;background:var(--pale);
+}
 .loc-item__ttl{
   font-family:'Barlow Condensed','IBM Plex Sans Thai',sans-serif;
   font-size:.98rem;font-weight:700;text-transform:uppercase;
@@ -601,8 +612,8 @@ html[lang="th"] .footer__col-hd{letter-spacing:0}
   .dining__img{height:380px}
   .dining__txt{flex:1;min-width:0}
   .loc{padding:8rem 3rem 6rem}
-  .loc__grid{grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem}
-  .loc__img{height:380px}
+  .loc__grid{grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
+  .loc__img{height:100%;min-height:380px;position:sticky;top:96px}
   .booking{padding:9rem 3rem 7rem}
   .booking__grid{grid-template-columns:1fr 1fr}
   .footer{padding:5.5rem 3rem 2.5rem}
