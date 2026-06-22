@@ -1,15 +1,20 @@
 // ---------------------------------------------------------------------------
 // Beds24 API V2 client (SERVER-SIDE ONLY).
 //
-// ⚠️  TEMPORARY TOKEN — TEST PHASE ONLY.
-// This module authenticates with a single long-lived "token" header read from
-// BEDS24_ACCESS_TOKEN. That value is a TEMPORARY access token that expires in
-// ~24h. There is intentionally NO refresh-token logic in this phase.
-// Before production you MUST replace this with the Beds24 refresh-token flow
-// (exchange a refresh token for short-lived access tokens automatically).
+// AUTH: refresh-token flow. BEDS24_REFRESH_TOKEN is long-lived and reusable
+// (Beds24's GET /authentication/token returns only { token, expiresIn } and
+// does NOT rotate the refresh token), so we exchange it for short-lived ~24h
+// access tokens on demand and cache them in memory per warm instance. On a
+// 401/403 we force one refresh and retry, covering tokens invalidated early.
 //
-// SECURITY: the token never leaves the server. Only the /api functions import
-// this file; the browser only ever talks to our own /api routes.
+// If no refresh token is configured we fall back to a static BEDS24_ACCESS_TOKEN
+// (the original test-phase behaviour) so existing setups keep working.
+//
+// To (re)issue a refresh token, run scripts/beds24-refresh.sh with an invite
+// code — that bootstrap is the only step that still rotates the refresh token.
+//
+// SECURITY: tokens never leave the server. Only the /api functions import this
+// file; the browser only ever talks to our own /api routes.
 // ---------------------------------------------------------------------------
 
 const BASE = 'https://beds24.com/api/v2';
@@ -17,9 +22,12 @@ const BASE = 'https://beds24.com/api/v2';
 const PROPERTY_ID = process.env.BEDS24_PROPERTY_ID || '335864';
 const ROOM_ID = process.env.BEDS24_ROOM_ID || '694923';
 
-// Loud, one-time reminder in the server logs that this is a throwaway token.
-console.warn(
-  '[Beds24] Using TEMPORARY 24h access token — replace with a refresh-token flow before production.'
+// Refresh tokens this many ms before the access token's stated expiry, so an
+// in-flight request never races the deadline.
+const EXPIRY_BUFFER_MS = 60_000;
+
+console.log(
+  `[Beds24] Auth mode: ${process.env.BEDS24_REFRESH_TOKEN ? 'refresh-token (auto)' : 'static access token (fallback)'}`
 );
 
 // Tagged errors so the API handlers can map them to clean HTTP responses
@@ -33,7 +41,52 @@ export class Beds24Error extends Error {
   }
 }
 
-function token() {
+// In-memory access-token cache, scoped to this (warm) function instance.
+let cachedToken = null; // { value, expiresAt }
+let refreshInFlight = null; // de-dupes concurrent refreshes on a cold instance
+
+// Exchange the refresh token for a fresh access token and cache it.
+async function refreshAccessToken() {
+  const rt = process.env.BEDS24_REFRESH_TOKEN;
+  if (!rt) {
+    throw new Beds24Error('missing_token', 'Beds24 refresh token is not configured.');
+  }
+  let res, body;
+  try {
+    res = await fetch(`${BASE}/authentication/token`, {
+      headers: { refreshToken: rt, accept: 'application/json' },
+    });
+    body = await res.json().catch(() => null);
+  } catch (e) {
+    throw new Beds24Error('upstream', 'Could not reach the Beds24 auth service.', e?.message);
+  }
+  if (!res.ok || !body?.token) {
+    // The refresh token itself is invalid/expired — needs a manual re-bootstrap
+    // via scripts/beds24-refresh.sh (invite code). Surface as token_expired.
+    throw new Beds24Error('token_expired', 'Beds24 refresh token is invalid or expired.', body);
+  }
+  const ttlMs = (Number(body.expiresIn) || 86400) * 1000;
+  cachedToken = { value: body.token, expiresAt: Date.now() + ttlMs };
+  return cachedToken.value;
+}
+
+// Return a usable access token: cached when fresh, otherwise refreshed.
+// `force` skips the cache (used to recover from an unexpected 401).
+async function getAccessToken({ force = false } = {}) {
+  if (process.env.BEDS24_REFRESH_TOKEN) {
+    if (!force && cachedToken && cachedToken.expiresAt - Date.now() > EXPIRY_BUFFER_MS) {
+      return cachedToken.value;
+    }
+    if (force) cachedToken = null;
+    // Coalesce concurrent refreshes so a burst of requests triggers one exchange.
+    if (!refreshInFlight) {
+      refreshInFlight = refreshAccessToken().finally(() => {
+        refreshInFlight = null;
+      });
+    }
+    return refreshInFlight;
+  }
+  // Fallback: static access token (no refresh token configured).
   const t = process.env.BEDS24_ACCESS_TOKEN;
   if (!t) {
     throw new Beds24Error('missing_token', 'Beds24 access token is not configured.');
@@ -41,8 +94,34 @@ function token() {
   return t;
 }
 
-function authHeaders() {
-  return { token: token(), 'Content-Type': 'application/json', accept: 'application/json' };
+async function authHeaders({ force = false } = {}) {
+  const token = await getAccessToken({ force });
+  return { token, 'Content-Type': 'application/json', accept: 'application/json' };
+}
+
+// Fetch a Beds24 endpoint with auth. On 401/403 in refresh mode, force one
+// token refresh and retry once before giving up. Returns { res, body }.
+async function beds24Fetch(path, init, label) {
+  const canRetry = !!process.env.BEDS24_REFRESH_TOKEN;
+  const attempt = async (force) =>
+    fetch(`${BASE}${path}`, { ...init, headers: { ...(await authHeaders({ force })), ...(init.headers || {}) } });
+
+  let res;
+  try {
+    res = await attempt(false);
+    if ((res.status === 401 || res.status === 403) && canRetry) {
+      res = await attempt(true); // token may have been invalidated early — refresh & retry
+    }
+  } catch (e) {
+    if (e instanceof Beds24Error) throw e;
+    throw new Beds24Error('upstream', `Could not reach the ${label} service.`, e?.message);
+  }
+
+  const body = await res.json().catch(() => null);
+  if (res.status === 401 || res.status === 403) {
+    throw new Beds24Error('token_expired', 'Beds24 token expired.', body);
+  }
+  return { res, body };
 }
 
 /** Whole nights between two YYYY-MM-DD dates. */
@@ -75,21 +154,14 @@ export async function getOffers({ arrival, departure, numAdults }) {
     numAdults: String(numAdults),
   });
 
-  let res, body;
-  try {
-    res = await fetch(`${BASE}/inventory/rooms/offers?${qs}`, { headers: authHeaders() });
-    body = await res.json().catch(() => null);
-  } catch (e) {
-    throw new Beds24Error('upstream', 'Could not reach the availability service.', e?.message);
-  }
-
-  if (res.status === 401 || res.status === 403) {
-    throw new Beds24Error('token_expired', 'Beds24 token expired.', body);
-  }
+  const { res, body } = await beds24Fetch(
+    `/inventory/rooms/offers?${qs}`,
+    { method: 'GET' },
+    'availability'
+  );
   if (!res.ok) {
     throw new Beds24Error('upstream', 'Availability service error.', { status: res.status, body });
   }
-
 
   // Confirmed shape: { data: [ { roomId, propertyId, offers: [ { price, unitsAvailable } ] } ] }
   const room = findRoomOffer(body, ROOM_ID);
@@ -150,25 +222,14 @@ export async function createBooking({
     },
   ];
 
-  let res, body;
-  try {
-    res = await fetch(`${BASE}/bookings`, {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify(payload),
-    });
-    body = await res.json().catch(() => null);
-  } catch (e) {
-    throw new Beds24Error('upstream', 'Could not reach the booking service.', e?.message);
-  }
-
-  if (res.status === 401 || res.status === 403) {
-    throw new Beds24Error('token_expired', 'Beds24 token expired.', body);
-  }
+  const { res, body } = await beds24Fetch(
+    '/bookings',
+    { method: 'POST', body: JSON.stringify(payload) },
+    'booking'
+  );
   if (!res.ok) {
     throw new Beds24Error('upstream', 'Booking service error.', { status: res.status, body });
   }
-
 
   // Response is an array of per-booking results. Accept a few field shapes.
   const first = Array.isArray(body) ? body[0] : body?.data?.[0] || body;
