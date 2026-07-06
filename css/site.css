@@ -151,6 +151,18 @@ html[lang="th"] h3{letter-spacing:0}
 }
 .scrim.open{display:block}
 
+/* keep the navbar from feeling cramped on phones */
+@media(max-width:767px){
+  .nav{padding:.85rem 1rem}
+  .nav.scrolled{padding:.65rem 1rem}
+  .nav__right{gap:.5rem}
+  .nav__logo{font-size:.98rem;gap:.45rem}
+  .nav__logo-img{height:32px}
+  /* icon-only contact button — the full menu (incl. Contact) is in the drawer */
+  .nav__book{padding:.6em;gap:0;min-width:40px;justify-content:center}
+  .nav__book span{display:none}
+}
+
 /* ------ HERO ------ */
 .hero{
   position:relative;min-height:100svh;
