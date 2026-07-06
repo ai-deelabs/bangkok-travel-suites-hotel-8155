@@ -1,6 +1,7 @@
 meta.json
 .claude-*.log
 .omc/
+.DS_Store
 
 # Secrets & build
 .env

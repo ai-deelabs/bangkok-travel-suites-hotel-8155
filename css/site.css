@@ -56,11 +56,17 @@ html[lang="th"] h3{letter-spacing:0}
   box-shadow:0 2px 28px rgba(0,0,0,.35);
 }
 .nav__logo{
+  display:flex;align-items:center;gap:.55rem;
   font-family:'Barlow Condensed',sans-serif;
   font-weight:800;font-size:1.15rem;
   letter-spacing:.1em;text-transform:uppercase;
   color:#fff;line-height:1.1;
 }
+.nav__logo-img{
+  width:auto;height:38px;flex:0 0 auto;
+  filter:drop-shadow(0 2px 5px rgba(0,0,0,.4));
+}
+.nav__logo-txt{display:block}
 .nav__logo small{
   display:block;font-size:.6em;font-weight:300;
   letter-spacing:.22em;color:rgba(245,239,228,.65);
@@ -152,7 +158,7 @@ html[lang="th"] h3{letter-spacing:0}
 }
 .hero__bg{
   position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1582535200497-8d831d74d18b?w=1600&h=900&fit=crop') center/cover no-repeat;
+  background:url('../assets/img/around_hotel/line_oa_chat_260706_145446.jpg') center/cover no-repeat;
   transform:scale(1.07);
   animation:heroZoom 14s ease-out forwards;
 }
@@ -277,8 +283,6 @@ html[lang="en"] .sec-title{letter-spacing:-.01em}
   transition:transform .4s ease,box-shadow .4s ease;
 }
 .rcard:hover{transform:translateY(-6px);box-shadow:0 22px 56px rgba(26,20,16,.25)}
-/* full-card click target overlaying the (non-interactive) card body */
-.rcard__link{position:absolute;inset:0;z-index:3}
 .rcard__img{
   width:100%;height:250px;object-fit:cover;
   display:block;transition:transform .6s ease;
@@ -448,7 +452,7 @@ html[lang="th"] .quote__text{letter-spacing:0}
 .loc{padding:7rem 1.4rem 5rem;background:var(--ivory)}
 .loc__grid{display:grid;grid-template-columns:1fr;gap:2.8rem;margin-top:2.8rem}
 .loc__img{
-  border-radius:3px;overflow:hidden;height:270px;
+  position:relative;border-radius:3px;overflow:hidden;height:270px;
 }
 .loc__img img{width:100%;height:100%;object-fit:cover}
 .loc__list{display:flex;flex-direction:column;gap:.9rem}
@@ -482,77 +486,16 @@ html[lang="th"] .loc-item__ttl{letter-spacing:0}
   font-size:.6rem;letter-spacing:.1em;color:var(--warm);margin-top:.1rem;
 }
 
-/* ------ BOOKING ------ */
-.booking{
-  background:var(--char);color:var(--ivory);
-  padding:8rem 1.4rem 6rem;text-align:center;
-}
-.booking .sec-eye{color:var(--red)}
-.booking .sec-title{color:var(--ivory);margin-bottom:1rem}
-.booking__sub{
-  font-size:.93rem;color:rgba(245,239,228,.55);
-  max-width:460px;margin:0 auto 2.5rem;line-height:1.9;
-}
-.booking__form{display:flex;flex-direction:column;gap:.9rem;max-width:500px;margin:0 auto}
-.booking__input{
-  width:100%;padding:.95em 1.2em;
-  border:1.5px solid rgba(245,239,228,.12);
-  border-radius:2px;
-  background:rgba(245,239,228,.05);
-  font-family:'IBM Plex Sans Thai',sans-serif;
-  font-size:.92rem;color:var(--ivory);
-  transition:border-color .2s;min-height:48px;
-}
-.booking__input::placeholder{color:rgba(245,239,228,.35)}
-.booking__input:focus{outline:none;border-color:var(--red)}
-.booking__btn{
-  width:100%;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
-}
-.booking__grid{display:grid;grid-template-columns:1fr;gap:.9rem}
-.booking__field{display:flex;flex-direction:column;gap:.4rem;text-align:left}
-.booking__field label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(245,239,228,.5);
-}
-html[lang="th"] .booking__field label{letter-spacing:0}
-select.booking__input{
-  -webkit-appearance:none;appearance:none;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23F5EFE4' stroke-width='2' opacity='.6'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.6rem;
-}
-.booking__input[type="date"]{cursor:pointer}
-.booking__input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.85);cursor:pointer}
-.booking__note{
-  margin-top:.4rem;font-size:.82rem;line-height:1.7;
-  color:#e8a0ac;text-align:center;
-}
-.booking__note.is-ok{color:#9fd8b0}
-.booking__fixed{
-  width:100%;padding:.95em 1.2em;min-height:48px;
-  border:1.5px solid rgba(245,239,228,.12);border-radius:2px;
-  background:rgba(245,239,228,.03);
-  font-family:'IBM Plex Sans Thai',sans-serif;font-size:.92rem;
-  color:rgba(245,239,228,.7);display:flex;align-items:center;
-}
-.booking__price{
-  margin:.2rem 0 .2rem;text-align:center;line-height:1.7;
-  font-family:'IBM Plex Mono',monospace;font-size:.95rem;letter-spacing:.04em;
-  color:var(--ivory);
-}
-html[lang="th"] .booking__price{letter-spacing:0;font-family:'IBM Plex Sans Thai',sans-serif}
-.booking__price.is-none{color:#e8a0ac}
-.booking__btn[disabled]{opacity:.45;cursor:not-allowed}
-.booking__btn.is-loading{opacity:.7;cursor:wait}
-
 /* ------ FOOTER ------ */
 .footer{background:#100c09;color:rgba(245,239,228,.55);padding:4.5rem 1.4rem 2rem}
 .footer__logo{
+  display:flex;align-items:center;gap:.7rem;
   font-family:'Barlow Condensed',sans-serif;
   font-weight:800;font-size:1.4rem;
   letter-spacing:.1em;text-transform:uppercase;
   color:var(--ivory);margin-bottom:.3rem;
 }
+.footer__logo-img{width:auto;height:46px;flex:0 0 auto}
 .footer__tag{
   font-family:'IBM Plex Mono',monospace;
   font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
@@ -614,8 +557,6 @@ html[lang="th"] .footer__col-hd{letter-spacing:0}
   .loc{padding:8rem 3rem 6rem}
   .loc__grid{grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
   .loc__img{height:100%;min-height:380px;position:sticky;top:96px}
-  .booking{padding:9rem 3rem 7rem}
-  .booking__grid{grid-template-columns:1fr 1fr}
   .footer{padding:5.5rem 3rem 2.5rem}
   .footer__grid{grid-template-columns:2fr 1fr 1fr 1.5fr}
   .footer__bottom{flex-direction:row;justify-content:space-between}
@@ -623,4 +564,130 @@ html[lang="th"] .footer__col-hd{letter-spacing:0}
 @media(min-width:1100px){
   .rcard{width:400px}
   .rcard__img{height:330px}
+}
+
+/* ------ GALLERY CUE (click hint) ------ */
+[data-gallery]{cursor:pointer}
+.gallery-cue{
+  position:absolute;top:.9rem;right:.9rem;z-index:4;
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.34rem .6rem;border-radius:999px;
+  background:rgba(15,11,8,.62);
+  backdrop-filter:blur(6px);
+  color:var(--ivory);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.66rem;letter-spacing:.06em;font-weight:400;
+  pointer-events:none;
+  opacity:.92;transition:background .3s ease,transform .3s ease;
+}
+.gallery-cue i,.gallery-cue svg{width:13px;height:13px}
+.rcard:hover .gallery-cue,
+.panel:hover .gallery-cue,
+.dining__fig:hover .gallery-cue,
+.loc__img:hover .gallery-cue{background:var(--red);transform:scale(1.05)}
+
+/* clickable Dining feature (parking) */
+.dining__f[data-gallery]{cursor:pointer;transition:color .2s ease}
+.dining__f[data-gallery]:hover{color:var(--red)}
+.dining__f-more{
+  display:inline-flex;align-items:center;gap:.3rem;
+  margin-left:.5rem;padding:.12rem .5rem;border-radius:999px;
+  background:rgba(155,27,48,.1);color:var(--red);
+  font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.05em;
+  transition:background .2s ease}
+.dining__f[data-gallery]:hover .dining__f-more{background:rgba(155,27,48,.18)}
+.dining__f-more i,.dining__f-more svg{width:11px;height:11px}
+
+/* ------ AUTO CROSS-FADE layer on image tiles ------ */
+img.xf-layer{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;
+  opacity:0;pointer-events:none;will-change:opacity;
+  transition:opacity .9s ease, transform .6s ease;
+}
+.rcard:hover img.xf-layer,
+.panel:hover img.xf-layer,
+.dining__fig:hover img.xf-layer,
+.loc__img:hover img.xf-layer{transform:scale(1.04)}
+
+/* ------ LIGHTBOX ------ */
+.lightbox{
+  position:fixed;inset:0;z-index:9999;
+  display:none;align-items:center;justify-content:center;
+}
+.lightbox.open{display:flex}
+body.lb-lock{overflow:hidden}
+.lightbox__backdrop{
+  position:absolute;inset:0;
+  background:rgba(12,9,6,.95);
+  backdrop-filter:blur(3px);
+  animation:lbFade .25s ease;
+}
+@keyframes lbFade{from{opacity:0}to{opacity:1}}
+.lightbox__stage{
+  position:relative;z-index:2;
+  max-width:92vw;max-height:70vh;
+  display:flex;align-items:center;justify-content:center;
+}
+.lightbox__img{
+  max-width:92vw;max-height:70vh;width:auto;height:auto;
+  object-fit:contain;border-radius:4px;
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+  animation:lbZoom .3s ease;
+}
+@keyframes lbZoom{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.lightbox__bar{
+  position:absolute;z-index:5;top:1.4rem;left:1.7rem;
+  display:flex;align-items:baseline;gap:.9rem;
+  color:var(--ivory);
+}
+.lightbox__title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;text-transform:uppercase;
+  letter-spacing:.04em;font-size:1.1rem;
+}
+.lightbox__count{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.78rem;color:rgba(245,239,228,.6);
+}
+.lightbox__close{
+  position:absolute;z-index:6;top:1.1rem;right:1.3rem;
+  width:44px;height:44px;border:none;border-radius:50%;
+  background:rgba(245,239,228,.1);color:var(--ivory);
+  font-size:1.5rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s ease}
+.lightbox__close:hover{background:var(--red)}
+.lightbox__nav{
+  position:absolute;z-index:6;top:50%;transform:translateY(-50%);
+  width:52px;height:52px;border:none;border-radius:50%;
+  background:rgba(245,239,228,.1);color:var(--ivory);
+  font-size:2rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s ease}
+.lightbox__nav:hover{background:var(--red)}
+.lightbox__prev{left:1.1rem}
+.lightbox__next{right:1.1rem}
+.lightbox__thumbs{
+  position:absolute;z-index:5;bottom:1rem;left:0;right:0;
+  display:flex;gap:.5rem;overflow-x:auto;
+  padding:.7rem 1.2rem;scrollbar-width:thin;
+  justify-content:flex-start;
+}
+.lightbox__thumbs::-webkit-scrollbar{height:6px}
+.lightbox__thumbs::-webkit-scrollbar-thumb{background:rgba(245,239,228,.25);border-radius:3px}
+.lightbox__thumb{
+  height:54px;width:78px;flex:0 0 auto;
+  object-fit:cover;border-radius:3px;cursor:pointer;
+  opacity:.45;border:2px solid transparent;
+  transition:opacity .2s ease}
+.lightbox__thumb:hover{opacity:.8}
+.lightbox__thumb.active{opacity:1;border-color:var(--red)}
+@media(min-width:900px){
+  .lightbox__thumbs{justify-content:center}
+}
+@media(max-width:600px){
+  .lightbox__nav{width:42px;height:42px;font-size:1.6rem}
+  .lightbox__thumb{height:44px;width:62px}
+  .lightbox__stage,.lightbox__img{max-height:62vh}
 }

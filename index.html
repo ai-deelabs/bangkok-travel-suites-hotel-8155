@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bangkok Travel Suites Hotel — โรงแรมแบงค็อก ทราเวล สวีทส์</title>
 <meta name="description" content="โรงแรมแบงค็อก ทราเวล สวีทส์ ห้องพักสไตล์คอนเทมโพรารีพร้อมการบริการสไตล์ไทย บนถนนงามวงศ์วาน กรุงเทพมหานคร">
+<link rel="icon" type="image/png" href="assets/img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@0.460.0"></script>
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="css/site.css">
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
   <a href="#" class="nav__logo">
-    Bangkok Travel Suites
-    <small>Hotel</small>
+    <img class="nav__logo-img" src="assets/img/logo.png" alt="Bangkok Travel Suites logo">
+    <span class="nav__logo-txt">Bangkok Travel Suites<small>Hotel</small></span>
   </a>
   <nav class="nav__links">
     <a href="#rooms" data-lang-th="ห้องพัก" data-lang-en="Rooms">ห้องพัก</a>
@@ -101,9 +102,8 @@ YOUR WAY">สัมผัส
   <div class="track-wrap" id="trackWrap">
     <div class="track">
 
-      <div class="rcard rv">
-        <a class="rcard__link" href="#contact" aria-label="Contact us about Standard Double"></a>
-        <img class="rcard__img" src="https://images.unsplash.com/photo-1776763018972-588e27bf6511?w=600&h=400&fit=crop" alt="Standard Double room">
+      <div class="rcard rv" data-gallery="double" role="button" tabindex="0" aria-label="View Standard Double photos">
+        <img class="rcard__img" src="assets/img/single_bed/line_oa_chat_260706_144427.jpg" alt="Standard Double room" loading="lazy">
         <div class="rcard__grad"></div>
         <div class="rcard__body">
           <span class="rcard__tag">&#8212; STANDARD DOUBLE</span>
@@ -117,9 +117,8 @@ YOUR WAY">สัมผัส
         </div>
       </div>
 
-      <div class="rcard rv d1">
-        <a class="rcard__link" href="#contact" aria-label="Contact us about Standard Twin"></a>
-        <img class="rcard__img" src="https://images.unsplash.com/photo-1758448755969-8791367cf5c5?w=600&h=400&fit=crop" alt="Standard Twin room">
+      <div class="rcard rv d1" data-gallery="twin" role="button" tabindex="0" aria-label="View Standard Twin photos">
+        <img class="rcard__img" src="assets/img/double_bed/line_oa_chat_260706_143526.jpg" alt="Standard Twin room" loading="lazy">
         <div class="rcard__grad"></div>
         <div class="rcard__body">
           <span class="rcard__tag">&#8212; STANDARD TWIN</span>
@@ -127,22 +126,6 @@ YOUR WAY">สัมผัส
           <div class="rcard__meta">
             <span class="rcard__meta-i"><i data-lucide="bed-double" width="11" height="11"></i>&nbsp;<span data-lang-th="เตียงเดี่ยว 2 เตียง" data-lang-en="2 Single beds">เตียงเดี่ยว 2 เตียง</span></span>
             <span class="rcard__meta-i"><i data-lucide="users" width="11" height="11"></i>&nbsp;<span data-lang-th="2 ท่าน" data-lang-en="2 Guests">2 ท่าน</span></span>
-            <span class="rcard__meta-i"><i data-lucide="wifi" width="11" height="11"></i>&nbsp;WiFi</span>
-          </div>
-          <div class="rcard__price" style="font-size:1rem"><span data-lang-th="สอบถามอัตรา" data-lang-en="Ask for rate">สอบถามอัตรา</span></div>
-        </div>
-      </div>
-
-      <div class="rcard rv d2">
-        <a class="rcard__link" href="#contact" aria-label="Contact us about Family Room"></a>
-        <img class="rcard__img" src="https://images.unsplash.com/photo-1638277000768-005d326db4b2?w=600&h=400&fit=crop" alt="Family room">
-        <div class="rcard__grad"></div>
-        <div class="rcard__body">
-          <span class="rcard__tag">&#8212; FAMILY ROOM</span>
-          <div class="rcard__name" data-lang-th="ห้องแฟมิลี่" data-lang-en="Family Room">ห้องแฟมิลี่</div>
-          <div class="rcard__meta">
-            <span class="rcard__meta-i"><i data-lucide="bed-double" width="11" height="11"></i>&nbsp;<span data-lang-th="หลายเตียง" data-lang-en="Multiple beds">หลายเตียง</span></span>
-            <span class="rcard__meta-i"><i data-lucide="users" width="11" height="11"></i>&nbsp;<span data-lang-th="3–4 ท่าน" data-lang-en="3–4 Guests">3–4 ท่าน</span></span>
             <span class="rcard__meta-i"><i data-lucide="wifi" width="11" height="11"></i>&nbsp;WiFi</span>
           </div>
           <div class="rcard__price" style="font-size:1rem"><span data-lang-th="สอบถามอัตรา" data-lang-en="Ask for rate">สอบถามอัตรา</span></div>
@@ -212,8 +195,8 @@ YOUR WAY">สัมผัส
       <div class="amen-num">06</div>
       <div class="amen-ico"><i data-lucide="car" width="20" height="20"></i></div>
       <div>
-        <div class="amen-ttl" data-lang-th="รถบริการรับ-ส่ง" data-lang-en="SHUTTLE SERVICE">รถบริการรับ-ส่ง</div>
-        <div class="amen-dsc" data-lang-th="มีรถบริการรับ-ส่งรอบกระทรวงสาธารณสุขและบริเวณใกล้เคียง สะดวกต่อการเดินทาง" data-lang-en="Shuttle service around the Ministry of Public Health and nearby area for easy getting around.">มีรถบริการรับ-ส่งรอบกระทรวงสาธารณสุขและบริเวณใกล้เคียง สะดวกต่อการเดินทาง</div>
+        <div class="amen-ttl" data-lang-th="รถบริการส่ง" data-lang-en="DROP-OFF SERVICE">รถบริการส่ง</div>
+        <div class="amen-dsc" data-lang-th="มีรถบริการส่งรอบกระทรวงสาธารณสุขและบริเวณใกล้เคียง สะดวกต่อการเดินทาง (บริการส่งอย่างเดียว)" data-lang-en="Drop-off service around the Ministry of Public Health and nearby area for easy getting around (drop-off only).">มีรถบริการส่งรอบกระทรวงสาธารณสุขและบริเวณใกล้เคียง สะดวกต่อการเดินทาง (บริการส่งอย่างเดียว)</div>
       </div>
     </div>
 
@@ -223,16 +206,16 @@ YOUR WAY">สัมผัส
 <!-- SPLIT PANELS -->
 <section class="split">
   <div class="split__pair">
-    <div class="panel rv">
-      <img src="https://images.unsplash.com/photo-1639647564912-651e29b8e6ad?w=900&h=600&fit=crop" alt="Outdoor pool with lounge chairs">
+    <div class="panel rv" data-gallery="food" role="button" tabindex="0" aria-label="View breakfast photos">
+      <img src="assets/img/food/line_oa_chat_260706_150636.jpg" alt="Breakfast dish — chicken rice" loading="lazy">
       <div class="panel__veil"></div>
       <div class="panel__lbl">
         <span class="panel__tag">&#8212; BREAKFAST</span>
         <div class="panel__ttl" data-lang-th="อาหารเช้า" data-lang-en="BREAKFAST">อาหารเช้า</div>
       </div>
     </div>
-    <div class="panel rv d1">
-      <img src="https://images.unsplash.com/photo-1759038085950-1234ca8f5fed?w=900&h=600&fit=crop" alt="Hotel reception lobby modern">
+    <div class="panel rv d1" data-gallery="lobby" role="button" tabindex="0" aria-label="View lobby photos">
+      <img src="assets/img/lobby/line_oa_chat_260706_145431.jpg" alt="Hotel lobby lounge" loading="lazy">
       <div class="panel__veil"></div>
       <div class="panel__lbl">
         <span class="panel__tag">&#8212; ARRIVAL</span>
@@ -246,8 +229,8 @@ YOUR WAY">สัมผัส
 <section class="dining" id="dining">
   <p class="sec-eye rv">&#8212; 03 / DINING</p>
   <div class="dining__inner">
-    <div class="dining__fig rv">
-      <img class="dining__img" src="https://images.unsplash.com/photo-1779301674216-506de8607c87?w=800&h=600&fit=crop" alt="Restaurant buffet spread">
+    <div class="dining__fig rv" data-gallery="restaurant" role="button" tabindex="0" aria-label="View restaurant photos">
+      <img class="dining__img" src="assets/img/restaurant/line_oa_chat_260706_150654.jpg" alt="Restaurant breakfast buffet" loading="lazy">
       <span class="dining__badge" data-lang-th="ทุกวัน 07:00–10:00" data-lang-en="Daily 07:00–10:00">ทุกวัน 07:00–10:00</span>
     </div>
     <div class="dining__txt rv d1">
@@ -266,7 +249,7 @@ YOUR WAY">สัมผัส
           <span class="dining__f-ico"><i data-lucide="store" width="15" height="15"></i></span>
           <span data-lang-th="มินิมาร์ทภายในโรงแรม" data-lang-en="On-site mini-mart">มินิมาร์ทภายในโรงแรม</span>
         </div>
-        <div class="dining__f">
+        <div class="dining__f" data-gallery="parking" role="button" tabindex="0" aria-label="View parking photos">
           <span class="dining__f-ico"><i data-lucide="square-parking" width="15" height="15"></i></span>
           <span data-lang-th="ลานจอดรถ" data-lang-en="On-site parking">ลานจอดรถ</span>
         </div>
@@ -288,8 +271,8 @@ YOUR WAY">สัมผัส
   <h2 class="sec-title rv" data-lang-th="ทำเลที่ตั้ง" data-lang-en="WHERE WE ARE">ทำเลที่ตั้ง</h2>
   <p class="dining__desc rv" style="margin-top:1rem;max-width:640px" data-lang-th="ใจกลางย่านงามวงศ์วาน นนทบุรี — เดินเพียง 10 นาทีถึง MRT สายสีม่วง ห้างสรรพสินค้า ตลาด และสถานที่ท่องเที่ยวอยู่รายล้อม เชื่อมต่อทุกมุมกรุงเทพฯ ได้สะดวก" data-lang-en="In the heart of Ngamwongwan, Nonthaburi — a 10-minute walk from the MRT Purple Line, surrounded by major malls, markets, and attractions, with easy connections across Bangkok.">ใจกลางย่านงามวงศ์วาน นนทบุรี — เดินเพียง 10 นาทีถึง MRT สายสีม่วง ห้างสรรพสินค้า ตลาด และสถานที่ท่องเที่ยวอยู่รายล้อม เชื่อมต่อทุกมุมกรุงเทพฯ ได้สะดวก</p>
   <div class="loc__grid">
-    <div class="loc__img rv">
-      <img src="https://images.unsplash.com/photo-1572272294800-a99116ad349c?w=800&h=550&fit=crop" alt="Bangkok aerial city view">
+    <div class="loc__img rv" data-gallery="hotel" role="button" tabindex="0" aria-label="View photos around the hotel">
+      <img src="assets/img/around_hotel/line_oa_chat_260706_145501.jpg" alt="Expressway and city view near the hotel" loading="lazy">
     </div>
     <div class="loc__list rv d1">
 
@@ -362,6 +345,15 @@ YOUR WAY">สัมผัส
         </div>
       </div>
 
+      <p class="loc-cat" data-lang-th="ที่โรงแรม" data-lang-en="At the hotel">ที่โรงแรม</p>
+      <div class="loc-item" data-gallery="parking" role="button" tabindex="0" aria-label="View parking photos">
+        <img class="loc-item__thumb" src="assets/img/parking_lot/line_oa_chat_260706_145440.jpg" alt="On-site parking" loading="lazy">
+        <div>
+          <div class="loc-item__ttl" data-lang-th="ที่จอดรถภายในโรงแรม" data-lang-en="ON-SITE PARKING">ที่จอดรถภายในโรงแรม</div>
+          <div class="loc-item__dist" data-lang-th="ดูรูปลานจอดรถ 5 รูป" data-lang-en="View 5 parking photos">ดูรูปลานจอดรถ 5 รูป</div>
+        </div>
+      </div>
+
       <p class="loc-cat" data-lang-th="ที่อยู่" data-lang-en="Our address">ที่อยู่</p>
       <a class="loc-item" href="https://maps.google.com/?q=86/3+Ngamwongwan+Rd+Bangkhen+Nonthaburi+11000" target="_blank" rel="noopener">
         <span class="loc-item__ico"><i data-lucide="map-pin" width="18" height="18"></i></span>
@@ -395,6 +387,20 @@ YOUR WAY">สัมผัส
         <div class="loc-item__dist">bangkoktravelsuites</div>
       </div>
     </a>
+    <a class="loc-item" href="https://www.facebook.com/bangkoktravelsuites/" target="_blank" rel="noopener">
+      <span class="loc-item__ico"><i data-lucide="facebook" width="18" height="18"></i></span>
+      <div>
+        <div class="loc-item__ttl" data-lang-th="เฟซบุ๊ก" data-lang-en="FACEBOOK">เฟซบุ๊ก</div>
+        <div class="loc-item__dist">Bangkok Travel Suites</div>
+      </div>
+    </a>
+    <a class="loc-item" href="https://www.facebook.com/Bkt9661/" target="_blank" rel="noopener">
+      <span class="loc-item__ico"><i data-lucide="facebook" width="18" height="18"></i></span>
+      <div>
+        <div class="loc-item__ttl" data-lang-th="เฟซบุ๊ก (เพจ 2)" data-lang-en="FACEBOOK (PAGE 2)">เฟซบุ๊ก (เพจ 2)</div>
+        <div class="loc-item__dist">Bkt9661</div>
+      </div>
+    </a>
     <a class="loc-item" href="https://maps.google.com/?q=86/3+Ngamwongwan+Rd+Bangkhen+Nonthaburi+11000" target="_blank" rel="noopener">
       <span class="loc-item__ico"><i data-lucide="map-pin" width="18" height="18"></i></span>
       <div>
@@ -410,16 +416,16 @@ YOUR WAY">สัมผัส
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer__logo">Bangkok Travel Suites</div>
+  <div class="footer__logo"><img class="footer__logo-img" src="assets/img/logo.png" alt="Bangkok Travel Suites logo"><span>Bangkok Travel Suites</span></div>
   <div class="footer__tag">&#8212; Ngamwongwan Road, Nonthaburi</div>
   <div class="footer__grid">
     <div>
       <p class="footer__col-hd" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</p>
       <p style="font-size:.84rem;color:rgba(245,239,228,.4);line-height:1.9;max-width:240px" data-lang-th="โรงแรมบางกอก ทราเวล สวีทส์ ห้องพักกว้างขวาง 40 ห้อง สไตล์ร่วมสมัย พร้อมการต้อนรับอบอุ่นแบบไทย บนถนนงามวงศ์วาน" data-lang-en="Bangkok Travel Suites Hotel — 40 spacious, contemporary rooms with warm Thai hospitality on Ngamwongwan Road.">โรงแรมบางกอก ทราเวล สวีทส์ ห้องพักกว้างขวาง 40 ห้อง สไตล์ร่วมสมัย พร้อมการต้อนรับอบอุ่นแบบไทย บนถนนงามวงศ์วาน</p>
       <div class="footer__socials">
-        <a href="#" aria-label="Facebook"><i data-lucide="facebook" width="17" height="17"></i></a>
-        <a href="#" aria-label="Instagram"><i data-lucide="instagram" width="17" height="17"></i></a>
-        <a href="#" aria-label="Line"><i data-lucide="message-circle" width="17" height="17"></i></a>
+        <a href="https://www.facebook.com/bangkoktravelsuites/" target="_blank" rel="noopener" aria-label="Facebook — Bangkok Travel Suites"><i data-lucide="facebook" width="17" height="17"></i></a>
+        <a href="https://www.facebook.com/Bkt9661/" target="_blank" rel="noopener" aria-label="Facebook — Bkt9661"><i data-lucide="facebook" width="17" height="17"></i></a>
+        <a href="https://line.me/ti/p/~bangkoktravelsuites" target="_blank" rel="noopener" aria-label="Line"><i data-lucide="message-circle" width="17" height="17"></i></a>
       </div>
     </div>
     <div>
@@ -455,6 +461,22 @@ YOUR WAY">สัมผัส
   </div>
 </footer>
 
+<!-- LIGHTBOX GALLERY -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="lightbox__backdrop" data-lb-close></div>
+  <div class="lightbox__bar">
+    <span class="lightbox__title" id="lbTitle"></span>
+    <span class="lightbox__count" id="lbCount"></span>
+  </div>
+  <button class="lightbox__close" id="lbClose" aria-label="Close gallery">&times;</button>
+  <button class="lightbox__nav lightbox__prev" id="lbPrev" aria-label="Previous photo">&#8249;</button>
+  <div class="lightbox__stage">
+    <img class="lightbox__img" id="lbImg" alt="">
+  </div>
+  <button class="lightbox__nav lightbox__next" id="lbNext" aria-label="Next photo">&#8250;</button>
+  <div class="lightbox__thumbs" id="lbThumbs"></div>
+</div>
+
 <script>
 lucide.createIcons();
 
@@ -482,16 +504,146 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
 
 // Drag-to-scroll room track
 var tw=document.getElementById('trackWrap');
-var isDn=false,sx,sl,dragged=false;
-tw.addEventListener('mousedown',function(e){isDn=true;dragged=false;sx=e.pageX-tw.offsetLeft;sl=tw.scrollLeft});
+var isDn=false,sx,sl,dragged=false,startX=0;
+tw.addEventListener('mousedown',function(e){isDn=true;dragged=false;startX=e.pageX;sx=e.pageX-tw.offsetLeft;sl=tw.scrollLeft});
 tw.addEventListener('mouseleave',function(){isDn=false});
 tw.addEventListener('mouseup',function(){isDn=false});
 tw.addEventListener('mousemove',function(e){
-  if(!isDn)return;e.preventDefault();dragged=true;
-  tw.scrollLeft=sl-(e.pageX-tw.offsetLeft-sx)*1.4;
+  if(!isDn)return;
+  // Only treat as a drag once the pointer has moved past a small threshold,
+  // so a normal click (with minor jitter) still opens the gallery.
+  if(Math.abs(e.pageX-startX)>6)dragged=true;
+  if(dragged){e.preventDefault();tw.scrollLeft=sl-(e.pageX-tw.offsetLeft-sx)*1.4;}
 });
-// Suppress the card link's click if the press was actually a drag.
-tw.addEventListener('click',function(e){if(dragged)e.preventDefault()},true);
+// Suppress the card click (gallery open) if the press was actually a drag.
+tw.addEventListener('click',function(e){if(dragged){e.preventDefault();e.stopPropagation();}},true);
+
+// ------ LIGHTBOX GALLERY ------
+(function(){
+  var PRE='assets/img/',STAMP='line_oa_chat_260706_';
+  function G(dir,codes){return codes.map(function(c){return PRE+dir+'/'+STAMP+c+'.jpg';});}
+  var GAL={
+    double:{title:'Standard Double',imgs:G('single_bed',['144427','144420','144423','144430','144433','144436','144439','144442','144445','144448','144913','144917','144920','144923','144925','144928','144932','144935','144939','144942','144944']).concat(G('room_item',['145309','145313','145316','145318','145321','145324','145329']))},
+    twin:{title:'Standard Twin',imgs:G('double_bed',['143526','143522','143530','143533','143538','143542','143551','143554','143558','143601','143620','143625']).concat(G('room_item',['145309','145313','145316','145318','145321','145324','145329']))},
+    food:{title:'Breakfast',imgs:G('food',['150636','150639','150642','150644','150647','150649','150651'])},
+    lobby:{title:'Lobby',imgs:G('lobby',['145431','145433','145436','150126','150129','150137','150139','150141','150143','150145','150147','150150'])},
+    restaurant:{title:'Restaurant',imgs:G('restaurant',['150654','150657','150700','150702','150705','150708','150711','150713','150716','150719'])},
+    hotel:{title:'Around the Hotel',imgs:G('around_hotel',['145446','145448','145450','145454','145501'])},
+    parking:{title:'Parking',imgs:G('parking_lot',['145440','145443','145458','145505','145508'])}
+  };
+
+  var lb=document.getElementById('lightbox'),
+      lbImg=document.getElementById('lbImg'),
+      lbTitle=document.getElementById('lbTitle'),
+      lbCount=document.getElementById('lbCount'),
+      lbThumbs=document.getElementById('lbThumbs');
+  var cur=null,idx=0;
+
+  function show(i){
+    if(!cur)return;
+    idx=(i+cur.imgs.length)%cur.imgs.length;
+    lbImg.src=cur.imgs[idx];
+    lbCount.textContent=(idx+1)+' / '+cur.imgs.length;
+    var ts=lbThumbs.children;
+    for(var t=0;t<ts.length;t++)ts[t].classList.toggle('active',t===idx);
+    if(ts[idx])ts[idx].scrollIntoView({block:'nearest',inline:'center'});
+  }
+  function open(key){
+    cur=GAL[key];if(!cur)return;
+    lbTitle.textContent=cur.title;
+    lbThumbs.innerHTML='';
+    cur.imgs.forEach(function(src,i){
+      var im=document.createElement('img');
+      im.className='lightbox__thumb';im.src=src;im.loading='lazy';im.alt='';
+      im.addEventListener('click',function(){show(i)});
+      lbThumbs.appendChild(im);
+    });
+    lb.classList.add('open');lb.setAttribute('aria-hidden','false');
+    document.body.classList.add('lb-lock');
+    show(0);
+  }
+  function close(){
+    lb.classList.remove('open');lb.setAttribute('aria-hidden','true');
+    document.body.classList.remove('lb-lock');
+    lbImg.src='';cur=null;
+  }
+
+  // Add a "N photos" cue badge to every gallery trigger
+  document.querySelectorAll('[data-gallery]').forEach(function(el){
+    var g=GAL[el.getAttribute('data-gallery')];if(!g)return;
+    // Image tiles get a corner badge; the Dining feature row gets an inline pill;
+    // the Location list row advertises its count in its own subtitle.
+    if(el.classList.contains('dining__f')){
+      var pill=document.createElement('span');
+      pill.className='dining__f-more';
+      pill.innerHTML='<i data-lucide="images"></i>'+g.imgs.length;
+      el.appendChild(pill);
+    }else if(!el.classList.contains('loc-item')){
+      var cue=document.createElement('span');
+      cue.className='gallery-cue';
+      cue.innerHTML='<i data-lucide="images"></i>'+g.imgs.length;
+      el.appendChild(cue);
+    }
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();open(el.getAttribute('data-gallery'));}
+    });
+  });
+
+  // ------ AUTO CROSS-FADE: each image tile cycles through its own gallery ------
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){
+    var tiles=document.querySelectorAll('.rcard[data-gallery],.panel[data-gallery],.dining__fig[data-gallery],.loc__img[data-gallery]');
+    tiles.forEach(function(tile,ti){
+      var g=GAL[tile.getAttribute('data-gallery')];
+      if(!g||g.imgs.length<2)return;
+      var base=tile.querySelector('img');
+      if(!base)return;
+      var layer=document.createElement('img');
+      layer.className='xf-layer';layer.alt='';layer.setAttribute('aria-hidden','true');
+      base.insertAdjacentElement('afterend',layer);
+      var imgs=g.imgs;
+      var idx=imgs.indexOf(base.getAttribute('src'));if(idx<0)idx=0;
+      var busy=false,paused=false;
+      function step(){
+        if(paused||busy||lb.classList.contains('open'))return;
+        busy=true;
+        var n=(idx+1)%imgs.length;
+        var pre=new Image();
+        pre.onload=function(){
+          layer.src=imgs[n];
+          requestAnimationFrame(function(){requestAnimationFrame(function(){layer.style.opacity='1';});});
+          setTimeout(function(){base.src=imgs[n];layer.style.opacity='0';idx=n;busy=false;},950);
+        };
+        pre.onerror=function(){busy=false;};
+        pre.src=imgs[n];
+      }
+      // pause while a guest is hovering a tile so they can look
+      tile.addEventListener('mouseenter',function(){paused=true;});
+      tile.addEventListener('mouseleave',function(){paused=false;});
+      setInterval(step,5000);
+      setTimeout(step,1500+ti*700); // stagger so tiles don't all switch at once
+    });
+  }
+
+  // Delegated open (blocked after a drag via stopPropagation above)
+  document.addEventListener('click',function(e){
+    var trig=e.target.closest('[data-gallery]');
+    if(trig){open(trig.getAttribute('data-gallery'));}
+  });
+
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbPrev').addEventListener('click',function(){show(idx-1)});
+  document.getElementById('lbNext').addEventListener('click',function(){show(idx+1)});
+  lb.querySelector('[data-lb-close]').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();
+    else if(e.key==='ArrowLeft')show(idx-1);
+    else if(e.key==='ArrowRight')show(idx+1);
+  });
+
+  lucide.createIcons();
+})();
 
 </script>
 
