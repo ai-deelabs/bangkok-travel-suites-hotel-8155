@@ -498,6 +498,58 @@ html[lang="th"] .loc-item__ttl{letter-spacing:0}
   font-size:.6rem;letter-spacing:.1em;color:var(--warm);margin-top:.1rem;
 }
 
+/* ------ BOOKING ------ */
+.booking{
+  background:var(--char);color:var(--ivory);
+  padding:6rem 1.4rem;text-align:center;
+}
+.booking .sec-eye{color:var(--red)}
+.booking .sec-title{color:var(--ivory);margin-bottom:1rem}
+.booking__sub{
+  font-size:.93rem;color:rgba(245,239,228,.55);
+  max-width:480px;margin:0 auto 2.6rem;line-height:1.9;
+}
+.booking__form{
+  display:grid;grid-template-columns:1fr;gap:1rem;
+  max-width:620px;margin:0 auto;text-align:left;
+}
+.booking__field{display:flex;flex-direction:column;gap:.4rem}
+.booking__field.full{grid-column:1/-1}
+.booking__label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(245,239,228,.5);padding-left:.15rem;
+}
+.booking__input{
+  width:100%;padding:.9em 1.1em;
+  border:1.5px solid rgba(245,239,228,.14);
+  border-radius:2px;
+  background:rgba(245,239,228,.05);
+  font-family:'IBM Plex Sans Thai',sans-serif;
+  font-size:.92rem;color:var(--ivory);
+  transition:border-color .2s;min-height:48px;
+}
+.booking__input::placeholder{color:rgba(245,239,228,.35)}
+.booking__input:focus{outline:none;border-color:var(--red)}
+textarea.booking__input{min-height:100px;resize:vertical;line-height:1.7}
+select.booking__input{
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a7e72' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1.1em center;padding-right:2.6em;
+}
+select.booking__input option{background:var(--char);color:var(--ivory)}
+.booking__input[type="date"]{color-scheme:dark}
+.booking__btn{
+  width:100%;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  margin-top:.4rem;
+}
+.booking__status{
+  grid-column:1/-1;text-align:center;min-height:1.2rem;margin-top:.2rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.05em;
+}
+.booking__status.ok{color:#7fd18a}
+.booking__status.err{color:#e08a95}
+
 /* ------ FOOTER ------ */
 .footer{background:#100c09;color:rgba(245,239,228,.55);padding:4.5rem 1.4rem 2rem}
 .footer__logo{
@@ -566,6 +618,8 @@ html[lang="th"] .footer__col-hd{letter-spacing:0}
   .dining__fig{flex:1;min-width:0}
   .dining__img{height:380px}
   .dining__txt{flex:1;min-width:0}
+  .booking{padding:8rem 3rem}
+  .booking__form{grid-template-columns:1fr 1fr;gap:1.1rem}
   .loc{padding:8rem 3rem 6rem}
   .loc__grid{grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
   .loc__img{height:100%;min-height:380px;position:sticky;top:96px}
