@@ -572,6 +572,25 @@ lucide.createIcons();
     statusEl.textContent = MSG[key][lang()];
   }
 
+  // Block past dates: check-in can't be before today, check-out can't be before check-in.
+  var checkin = document.getElementById('bf-checkin');
+  var checkout = document.getElementById('bf-checkout');
+  function todayISO(){
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); // local date, no UTC off-by-one
+    return d.toISOString().slice(0, 10);
+  }
+  if(checkin && checkout){
+    var today = todayISO();
+    checkin.min = today;
+    checkout.min = today;
+    checkin.addEventListener('change', function(){
+      var floor = checkin.value || today;
+      checkout.min = floor;
+      if(checkout.value && checkout.value < floor){ checkout.value = ''; }
+    });
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var d = new FormData(form);
