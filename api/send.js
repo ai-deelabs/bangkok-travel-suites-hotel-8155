@@ -17,18 +17,28 @@ const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 const MAX_BODY_BYTES = 10 * 1024; // ~10 KB anti-abuse cap
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Human-friendly labels for known fields; unknown fields fall back to the raw key.
+// Thai labels for the known booking fields; unknown fields fall back to the raw key.
 const FIELD_LABELS = {
-  name: 'Name',
-  email: 'Email',
-  phone: 'Phone',
-  room_type: 'Room type',
-  checkin: 'Check-in',
-  checkout: 'Check-out',
-  guests: 'Guests',
-  rooms: 'Rooms',
-  message: 'Message',
+  name: 'ชื่อผู้จอง',
+  email: 'อีเมล',
+  phone: 'เบอร์โทร',
+  room_type: 'ประเภทห้องพัก',
+  checkin: 'วันเช็คอิน',
+  checkout: 'วันเช็คเอาต์',
+  guests: 'จำนวนผู้เข้าพัก',
+  rooms: 'จำนวนห้อง',
+  message: 'คำขอพิเศษ',
 };
+
+// Friendlier Thai rendering for a few known values.
+const ROOM_TYPE_TH = {
+  'No preference': 'ไม่ระบุ (ให้ทางโรงแรมแนะนำ)',
+  'Standard Double': 'ห้องเตียงเดี่ยว (Standard Double)',
+  'Standard Twin': 'ห้องเตียงคู่ (Standard Twin)',
+};
+
+const FONT_STACK = "'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Thai',sans-serif";
+const BASE_FONT = `font-family:${FONT_STACK}`;
 
 function escapeHtml(str) {
   return String(str)
@@ -43,26 +53,67 @@ function labelFor(key) {
   return FIELD_LABELS[key] || key.replace(/[_-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-// Build a clean HTML table from ALL submitted fields (skips blanks).
+// YYYY-MM-DD -> DD/MM/YYYY (leaves other strings untouched).
+function formatDate(value) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : value;
+}
+
+// Render a submitted value in a friendlier Thai form where we recognise the field.
+function formatValue(key, value) {
+  const v = String(value);
+  if (key === 'checkin' || key === 'checkout') return formatDate(v);
+  if (key === 'room_type') return ROOM_TYPE_TH[v] || v;
+  if (key === 'guests') return `${v} ท่าน`;
+  if (key === 'rooms') return `${v} ห้อง`;
+  return v;
+}
+
+// The domain guests booked from (derived from MAIL_FROM), for the "from your website" line.
+function siteDomain() {
+  const m = /@([^\s>]+)/.exec(String(process.env.MAIL_FROM || ''));
+  return m ? m[1] : '';
+}
+
+// Build a clean two-column list from ALL submitted fields (skips blanks).
 function buildTable(fields) {
   const rows = Object.keys(fields)
     .filter((k) => fields[k] != null && String(fields[k]).trim() !== '')
     .map((k) => {
       const label = escapeHtml(labelFor(k));
-      const value = escapeHtml(fields[k]).replace(/\n/g, '<br>');
+      const value = escapeHtml(formatValue(k, fields[k])).replace(/\n/g, '<br>');
       return `<tr>
-        <td style="padding:8px 14px;border:1px solid #e5e0d8;font-weight:600;background:#faf7f2;white-space:nowrap;vertical-align:top">${label}</td>
-        <td style="padding:8px 14px;border:1px solid #e5e0d8">${value}</td>
+        <td style="padding:11px 16px;border-bottom:1px solid #efe9df;color:#8a7e72;font-size:13px;white-space:nowrap;vertical-align:top;width:38%">${label}</td>
+        <td style="padding:11px 16px;border-bottom:1px solid #efe9df;color:#1a1410;font-size:15px;font-weight:600">${value}</td>
       </tr>`;
     })
     .join('');
-  return `<table style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1a1410">${rows}</table>`;
+  return `<table style="width:100%;border-collapse:collapse;${BASE_FONT}">${rows}</table>`;
 }
 
 function notificationHtml(fields) {
-  return `<div style="font-family:Arial,Helvetica,sans-serif;color:#1a1410">
-    <h2 style="margin:0 0 14px;font-size:18px">New booking request</h2>
-    ${buildTable(fields)}
+  const domain = siteDomain();
+  const fromLine = domain ? `เว็บไซต์ ${escapeHtml(domain)}` : 'เว็บไซต์ของโรงแรม';
+  const guestEmail = String(fields.email || '').trim();
+  const replyHint = EMAIL_RE.test(guestEmail)
+    ? `<p style="margin:18px 0 0;font-size:13px;color:#8a7e72">💬 ตอบกลับอีเมลฉบับนี้เพื่อติดต่อผู้จองได้โดยตรง</p>`
+    : '';
+  return `<div style="background:#ece7de;padding:24px 12px;${BASE_FONT}">
+    <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 18px rgba(26,20,16,.10)">
+      <div style="background:#9B1B30;color:#F5EFE4;padding:20px 24px">
+        <div style="font-size:19px;font-weight:700;letter-spacing:.02em">Bangkok Travel Suites</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">คำขอจองห้องพักใหม่</div>
+      </div>
+      <div style="padding:24px">
+        <p style="margin:0 0 4px;font-size:17px;font-weight:700;color:#1a1410">มีคำขอจองใหม่เข้ามา 🎉</p>
+        <p style="margin:0 0 18px;font-size:13px;color:#8a7e72">ส่งมาจาก${fromLine}</p>
+        ${buildTable(fields)}
+        ${replyHint}
+      </div>
+      <div style="padding:14px 24px;background:#faf7f2;border-top:1px solid #efe9df;font-size:11px;color:#a99f92">
+        อีเมลอัตโนมัติจาก${fromLine} — ไม่ต้องตั้งค่าใด ๆ เพิ่มเติม
+      </div>
+    </div>
   </div>`;
 }
 
